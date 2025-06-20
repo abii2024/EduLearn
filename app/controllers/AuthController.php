@@ -4,6 +4,10 @@ require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Student.php';
 require_once __DIR__ . '/../models/Teacher.php';
 
+// Views
+require_once __DIR__ . '/../views/LoginView.php';
+require_once __DIR__ . '/../views/RegisterView.php';
+
 class AuthController
 {
     public static function login()
@@ -25,10 +29,10 @@ class AuthController
                 exit;
             } else {
                 $error = "Ongeldige inloggegevens.";
-                include_once __DIR__ . '/../views/login.php';
+                LoginView::Render($error);
             }
         } else {
-            include_once __DIR__ . '/../views/login.php';
+            LoginView::Render();
         }
     }
 
@@ -43,13 +47,13 @@ class AuthController
 
             if (empty($name) || empty($email) || empty($password) || !in_array($role, ['student', 'teacher'])) {
                 $error = "Vul alle velden correct in.";
-                include_once __DIR__ . '/../views/register.php';
+                RegisterView::Render($error);
                 return;
             }
 
             if (User::findByEmail($email)) {
                 $error = "E-mailadres is al in gebruik.";
-                include_once __DIR__ . '/../views/register.php';
+                RegisterView::Render($error);
                 return;
             }
 
@@ -71,7 +75,7 @@ class AuthController
             header("Location: /dashboard");
             exit;
         } else {
-            include_once __DIR__ . '/../views/register.php';
+            RegisterView::Render();
         }
     }
 

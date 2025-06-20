@@ -7,6 +7,10 @@ require_once __DIR__ . '/../models/Teacher.php';
 require_once __DIR__ . '/../models/Lesson.php';
 require_once __DIR__ . '/../models/Assignment.php';
 
+// Views
+require_once __DIR__ . '/../views/DashboardStudentView.php';
+require_once __DIR__ . '/../views/DashboardTeacherView.php';
+
 class DashboardController extends BaseController
 {
     public static function execute()
@@ -21,14 +25,12 @@ class DashboardController extends BaseController
         if ($role === 'student') {
             $lessons = Lesson::getAllForStudent($userId);
             $assignments = Assignment::getAllForStudent($userId);
-            $studentName = $name;
-            include_once __DIR__ . '/../views/dashboard_student.php';
+            DashboardStudentView::Render($lessons, $assignments, $name);
 
         } elseif ($role === 'teacher') {
             $lessons = Lesson::getAllByTeacher($userId);
             $recentAssignments = Assignment::getRecentByTeacher($userId);
-            $teacherName = $name;
-            include_once __DIR__ . '/../views/dashboard_teacher.php';
+            DashboardTeacherView::Render($lessons, $recentAssignments, $name);
 
         } else {
             header("Location: /");
