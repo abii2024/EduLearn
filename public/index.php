@@ -1,12 +1,7 @@
 <?php
-// Start de sessie
-session_start();
+// Zorg dat foutmeldingen zichtbaar zijn tijdens development
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Zet de base directory voor alle includes
-define('BASE_PATH', dirname(__DIR__));
-
-// Autoloading of basic includes
-require_once BASE_PATH . '/app/core/router.php';
-require_once BASE_PATH . '/app/core/routes.php';
-require_once BASE_PATH . '/app/core/controller.php';
-require_once BASE_PATH . '/app/core/model.php';
+// Start de router via het entrypoint
+require_once __DIR__ . '/../app/core/routing_entry.php';

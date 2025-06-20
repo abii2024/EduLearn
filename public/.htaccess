@@ -1,7 +1,13 @@
+# Schakel mod_rewrite in
 RewriteEngine On
-RewriteBase /
 
-# Stuur alles behalve bestaande bestanden of mappen naar index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Zet de base directory (pas aan als je EduLearn niet direct onder root hebt)
+RewriteBase /EduLearn/public/
+
+# Als het verzoek een bestaand bestand of map is, doe dan niets
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Anders: stuur alles naar index.php
 RewriteRule ^ index.php [QSA,L]
