@@ -1,4 +1,5 @@
 <?php
+if (!defined('rinder')) { die('Direct access not permitted'); }
 
 class NewsView {
     public static function Render($latestNewsPost = null) {
@@ -8,12 +9,12 @@ class NewsView {
         <main class="container">
             <h1>📰 Laatste Nieuws</h1>
 
-            <?php if (isset($latestNewsPost)) : ?>
+            <?php if (isset($latestNewsPost) && is_array($latestNewsPost) && !empty($latestNewsPost)) : ?>
                 <article class="news-article">
-                    <h2><?= htmlspecialchars($latestNewsPost['title']) ?></h2>
-                    <p class="date">Geplaatst op: <?= date('d-m-Y', strtotime($latestNewsPost['date'])) ?></p>
+                    <h2><?= htmlspecialchars($latestNewsPost['title'] ?? 'Geen titel') ?></h2>
+                    <p class="date">Geplaatst op: <?= date('d-m-Y', strtotime($latestNewsPost['created_at'] ?? 'now')) ?></p>
                     <div class="body">
-                        <?= nl2br(htmlspecialchars($latestNewsPost['body'])) ?>
+                        <?= nl2br(htmlspecialchars($latestNewsPost['content'] ?? 'Geen inhoud beschikbaar.')) ?>
                     </div>
                 </article>
             <?php else : ?>

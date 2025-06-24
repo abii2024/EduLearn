@@ -47,4 +47,29 @@ class User extends BaseModel
     {
         return password_verify($inputPassword, $hashedPassword);
     }
+    
+    public static function initializeDatabase()
+    {
+        global $pdo;
+        
+        // Create table if it doesn't exist
+        $sql = "CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            role ENUM('student', 'teacher') NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )";
+        
+        $pdo->exec($sql);
+        
+        // Check if created_at column exists, if not add it
+        try {
+            $pdo->query("SELECT created_at FROM users LIMIT 1");
+        } catch (PDOException $e) {
+            // Column doesn't exist, add it
+            $pdo->exec("ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        }
+    }
 }

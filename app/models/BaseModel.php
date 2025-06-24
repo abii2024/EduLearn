@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/interfaces/ORMinterface.php';
-require_once __DIR__ . '/dbConnect.php';
+require_once dirname(__DIR__) . '/../config/dbConnect.php';
 
 abstract class BaseModel implements ORMinterface
 {

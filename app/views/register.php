@@ -1,4 +1,5 @@
 <?php
+if (!defined('rinder')) { die('Direct access not permitted'); }
 
 class RegisterView {
     public static function Render($error = null) {
@@ -12,7 +13,7 @@ class RegisterView {
                 <div class="error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
-            <form action="/register" method="POST" class="form-box">
+            <form action="/EduLearn/public/register" method="POST" class="form-box">
                 <label for="name">Volledige naam:</label>
                 <input type="text" id="name" name="name" required>
 
@@ -31,7 +32,7 @@ class RegisterView {
                 <button type="submit" class="btn">Account aanmaken</button>
             </form>
 
-            <p>Heb je al een account? <a href="/login">Log hier in</a>.</p>
+            <p>Heb je al een account? <a href="/EduLearn/public/login">Log hier in</a>.</p>
         </main>
         <?php
         include_once __DIR__ . "/shared/footer.php";

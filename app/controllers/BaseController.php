@@ -1,12 +1,18 @@
 <?php
-
 class BaseController
 {
+    protected $pdo;
+
     public function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        // ✅ Databaseverbinding beschikbaar maken
+        require_once dirname(__DIR__) . '/../config/dbConnect.php';
+        global $pdo;
+        $this->pdo = $pdo;
     }
 
     protected function isLoggedIn(): bool
@@ -17,7 +23,7 @@ class BaseController
     protected function requireLogin()
     {
         if (!$this->isLoggedIn()) {
-            header("Location: /login");
+            header("Location: /EduLearn/public/login");
             exit;
         }
     }
@@ -25,7 +31,7 @@ class BaseController
     protected function requireRole(string $role)
     {
         if (!$this->isLoggedIn() || $_SESSION['user']['role'] !== $role) {
-            header("Location: /");
+            header("Location: /EduLearn/public/");
             exit;
         }
     }

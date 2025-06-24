@@ -1,6 +1,7 @@
 <?php
+require_once dirname(__DIR__) . '/../config/dbConnect.php';
 require_once __DIR__ . '/../models/SalesModel.php';
-require_once __DIR__ . '/../views/HomepageView.php';
+require_once __DIR__ . '/../views/homepage.php';
 
 class HomepageController
 {
