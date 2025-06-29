@@ -35,4 +35,17 @@ class BaseController
             exit;
         }
     }
+
+    protected function requireTeacherOrAdmin()
+    {
+        if (!$this->isLoggedIn() || !in_array($_SESSION['user']['role'], ['teacher', 'admin'])) {
+            header("Location: /EduLearn/public/");
+            exit;
+        }
+    }
+
+    protected function isAdmin(): bool
+    {
+        return $this->isLoggedIn() && $_SESSION['user']['role'] === 'admin';
+    }
 }

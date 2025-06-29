@@ -1,7 +1,7 @@
 <?php
 // app/controllers/ClassController.php
 require_once dirname(__DIR__, 2) . '/config/dbConnect.php';
-require_once __DIR__ . '/../models/ClassModel.php';
+require_once __DIR__ . '/../models/ClassModel.php'; 
 require_once __DIR__ . '/../models/User.php';
 
 class ClassController

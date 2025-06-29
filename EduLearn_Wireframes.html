@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn Wireframes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        .wireframe-section {
+            background: white;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .wireframe-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .wireframe-content {
+            padding: 20px;
+        }
+
+        .wireframe {
+            border: 2px solid #bdc3c7;
+            background: #ecf0f1;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .wireframe-title {
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .wireframe-element {
+            background: #95a5a6;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .wireframe-element.header {
+            background: #2c3e50;
+            padding: 15px;
+        }
+
+        .wireframe-element.navbar {
+            background: #34495e;
+            padding: 12px;
+        }
+
+        .wireframe-element.content {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: 2px dashed #bdc3c7;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wireframe-element.sidebar {
+            background: #7f8c8d;
+            width: 200px;
+            float: left;
+            margin-right: 20px;
+            min-height: 300px;
+        }
+
+        .wireframe-element.main-content {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: 2px dashed #bdc3c7;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wireframe-element.footer {
+            background: #2c3e50;
+            padding: 15px;
+            clear: both;
+        }
+
+        .wireframe-element.form {
+            background: #e8f4fd;
+            color: #2c3e50;
+            border: 2px solid #3498db;
+        }
+
+        .wireframe-element.button {
+            background: #3498db;
+            padding: 8px 20px;
+            display: inline-block;
+            margin: 5px;
+            border-radius: 4px;
+        }
+
+        .wireframe-element.table {
+            background: white;
+            color: #2c3e50;
+            border: 1px solid #bdc3c7;
+            padding: 20px;
+        }
+
+        .wireframe-row {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+        }
+
+        .wireframe-col {
+            flex: 1;
+        }
+
+        .wireframe-col-3 {
+            flex: 0 0 25%;
+        }
+
+        .wireframe-col-6 {
+            flex: 0 0 50%;
+        }
+
+        .wireframe-col-9 {
+            flex: 0 0 75%;
+        }
+
+        .user-roles {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .role-section {
+            flex: 1;
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .role-section.student {
+            border-color: #27ae60;
+        }
+
+        .role-section.teacher {
+            border-color: #f39c12;
+        }
+
+        .role-section.admin {
+            border-color: #e74c3c;
+        }
+
+        .role-header {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .role-header.student {
+            background: #27ae60;
+        }
+
+        .role-header.teacher {
+            background: #f39c12;
+        }
+
+        .role-header.admin {
+            background: #e74c3c;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .wireframe-row {
+                flex-direction: column;
+            }
+            
+            .user-roles {
+                flex-direction: column;
+            }
+            
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .toc {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .toc a:hover {
+            background: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 EduLearn Platform Wireframes</h1>
+        
+        <div class="toc">
+            <h2>📋 Inhoudsopgave</h2>
+            <ul>
+                <li><a href="#homepage">1. Homepage</a></li>
+                <li><a href="#auth">2. Authenticatie (Login/Register)</a></li>
+                <li><a href="#dashboards">3. Dashboards per Rol</a></li>
+                <li><a href="#teacher-features">4. Docent Functionaliteiten</a></li>
+                <li><a href="#admin-features">5. Admin Functionaliteiten</a></li>
+                <li><a href="#student-features">6. Student Functionaliteiten</a></li>
+                <li><a href="#navigation">7. Navigatie & Layout</a></li>
+            </ul>
+        </div>
+
+        <!-- Homepage Wireframe -->
+        <div class="wireframe-section" id="homepage">
+            <div class="wireframe-header">1. 🏠 Homepage</div>
+            <div class="wireframe-content">
+                <div class="wireframe">
+                    <div class="wireframe-title">Homepage Layout</div>
+                    <div class="wireframe-element header">HEADER - EduLearn Logo & Branding</div>
+                    <div class="wireframe-element navbar">NAVBAR - Home | Login | Register | About</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h3>Welkom bij EduLearn 🎓</h3>
+                                    <p>Hero sectie met welkomstbericht</p>
+                                    <p>Platform beschrijving</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h3>📢 Actueel Aanbod</h3>
+                                    <p>Promotie/cursus highlight</p>
+                                    <p>Prijs en details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element content">
+                        <div>
+                            <h3>🚀 Call-to-Action Sectie</h3>
+                            <p>Inloggen of registreren buttons</p>
+                            <p>Voor ingelogde gebruikers: dashboard link</p>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER - Links, Contact, Copyright</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authentication Wireframes -->
+        <div class="wireframe-section" id="auth">
+            <div class="wireframe-header">2. 🔐 Authenticatie</div>
+            <div class="wireframe-content">
+                
+                <div class="wireframe">
+                    <div class="wireframe-title">Login Pagina</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-3"></div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element form">
+                                <h3>Inloggen</h3>
+                                <p>📧 Email Input Field</p>
+                                <p>🔒 Password Input Field</p>
+                                <div class="wireframe-element button">LOGIN BUTTON</div>
+                                <p>Link naar registratie</p>
+                                <p>Foutmeldingen gebied</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-3"></div>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Registratie Pagina</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-3"></div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element form">
+                                <h3>Registreren</h3>
+                                <p>👤 Naam Input Field</p>
+                                <p>📧 Email Input Field</p>
+                                <p>🔒 Wachtwoord Input Field</p>
+                                <p>👥 Rol Selectie (Student/Docent)</p>
+                                <div class="wireframe-element button">REGISTER BUTTON</div>
+                                <p>Link naar login</p>
+                                <p>Validatie meldingen gebied</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-3"></div>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboards -->
+        <div class="wireframe-section" id="dashboards">
+            <div class="wireframe-header">3. 📊 Dashboards per Rol</div>
+            <div class="wireframe-content">
+                
+                <div class="user-roles">
+                    <div class="role-section student">
+                        <div class="role-header student">👨‍🎓 Student Dashboard</div>
+                        <div style="padding: 15px;">
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Mijn Klassen</h4>
+                                    <p>📚 Overzicht ingeschreven klassen</p>
+                                    <p>🎯 Recente lessen</p>
+                                    <p>📝 Opdrachten</p>
+                                </div>
+                            </div>
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Snelle Acties</h4>
+                                    <p>📰 Nieuwspagina</p>
+                                    <p>🚪 Uitloggen</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="role-section teacher">
+                        <div class="role-header teacher">👩‍🏫 Docent Dashboard</div>
+                        <div style="padding: 15px;">
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Mijn Klassen</h4>
+                                    <p>📚 Klassenbeheer</p>
+                                    <p>👥 Studentenbeheer</p>
+                                    <p>📝 Lessen & Opdrachten</p>
+                                </div>
+                            </div>
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Acties</h4>
+                                    <p>➕ Nieuwe klas</p>
+                                    <p>👨‍💼 Teacher Admin</p>
+                                    <p>📰 Nieuws</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="role-section admin">
+                        <div class="role-header admin">👑 Admin Dashboard</div>
+                        <div style="padding: 15px;">
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Systeembeheer</h4>
+                                    <p>📊 Statistieken</p>
+                                    <p>👥 Gebruikersbeheer</p>
+                                    <p>🔧 Systeeminstellingen</p>
+                                </div>
+                            </div>
+                            <div class="wireframe-element content">
+                                <div>
+                                    <h4>Acties</h4>
+                                    <p>👤 Gebruikers promoveren</p>
+                                    <p>🗑️ Gebruikers verwijderen</p>
+                                    <p>📈 Rapporten</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Features -->
+        <div class="wireframe-section" id="teacher-features">
+            <div class="wireframe-header">4. 👩‍🏫 Docent Functionaliteiten</div>
+            <div class="wireframe-content">
+                
+                <div class="wireframe">
+                    <div class="wireframe-title">Klassenoverzicht</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR - Dashboard | Klassen | Teacher Admin | Nieuws | Logout</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col">
+                            <div class="wireframe-element content">
+                                <h3>📚 Mijn Klassen</h3>
+                                <div class="wireframe-element button">➕ Nieuwe Klas Maken</div>
+                            </div>
+                            <div class="wireframe-element table">
+                                <h4>Klassen Tabel</h4>
+                                <p>📋 Klasnaam | Beschrijving | Studenten | Acties</p>
+                                <p>🔍 Bekijk Details | ✏️ Bewerk | 🗑️ Verwijder</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Klas Details</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>📚 Klas Informatie</h3>
+                                <p>Klasnaam en beschrijving</p>
+                                <p>Aantal studenten</p>
+                                <div class="wireframe-element button">🗑️ Klas Verwijderen</div>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>👥 Student Beheer</h3>
+                                <p>Dropdown: beschikbare studenten</p>
+                                <div class="wireframe-element button">➕ Student Toevoegen</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element table">
+                        <h4>👨‍🎓 Ingeschreven Studenten</h4>
+                        <p>Naam | Email | Inschrijfdatum | Acties</p>
+                        <p>❌ Uitschrijven button per student</p>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Teacher Admin Panel</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element form">
+                                <h3>👤 Nieuwe Student Maken</h3>
+                                <p>Naam, Email, Wachtwoord fields</p>
+                                <div class="wireframe-element button">Student Aanmaken</div>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element form">
+                                <h3>🔄 Snelle Inschrijving</h3>
+                                <p>Student selectie dropdown</p>
+                                <p>Klas selectie dropdown</p>
+                                <div class="wireframe-element button">Inschrijven</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element table">
+                        <h4>👥 Alle Studenten</h4>
+                        <p>Naam | Email | Acties</p>
+                        <p>🔑 Wachtwoord Reset | 📚 Klas Beheer</p>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Features -->
+        <div class="wireframe-section" id="admin-features">
+            <div class="wireframe-header">5. 👑 Admin Functionaliteiten</div>
+            <div class="wireframe-content">
+                
+                <div class="wireframe">
+                    <div class="wireframe-title">Admin Dashboard</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR - Dashboard | Gebruikers | Rapporten | Instellingen | Logout</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-3">
+                            <div class="wireframe-element content">
+                                <h4>📊 Statistieken</h4>
+                                <p>👥 Totaal gebruikers</p>
+                                <p>👨‍🎓 Studenten: X</p>
+                                <p>👩‍🏫 Docenten: Y</p>
+                                <p>👑 Admins: Z</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-9">
+                            <div class="wireframe-element content">
+                                <h4>🎯 Snelle Acties</h4>
+                                <div class="wireframe-element button">👥 Gebruikersbeheer</div>
+                                <div class="wireframe-element button">📈 Rapporten Bekijken</div>
+                                <div class="wireframe-element button">⚙️ Systeeminstellingen</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Gebruikersbeheer</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-element content">
+                        <h3>👥 Alle Gebruikers</h3>
+                        <p>Filter opties: Alle | Studenten | Docenten | Admins</p>
+                    </div>
+                    
+                    <div class="wireframe-element table">
+                        <h4>Gebruikers Tabel</h4>
+                        <p>ID | Naam | Email | Rol | Registratiedatum | Acties</p>
+                        <p>⬆️ Promoveer naar Admin | 🗑️ Verwijder Gebruiker</p>
+                        <p>⚠️ Bevestigingsmodals voor acties</p>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Features -->
+        <div class="wireframe-section" id="student-features">
+            <div class="wireframe-header">6. 👨‍🎓 Student Functionaliteiten</div>
+            <div class="wireframe-content">
+                
+                <div class="wireframe">
+                    <div class="wireframe-title">Student Dashboard</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR - Dashboard | Nieuws | Logout</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>📚 Mijn Klassen</h3>
+                                <p>Lijst van ingeschreven klassen</p>
+                                <p>Klik voor details en lessen</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>📝 Recente Lessen</h3>
+                                <p>Laatste lessen van alle klassen</p>
+                                <p>Klik om les te bekijken</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element content">
+                        <h3>📋 Mijn Opdrachten</h3>
+                        <p>Overzicht van alle opdrachten</p>
+                        <p>Deadlines en status</p>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Klas Details (Student Perspectief)</div>
+                    <div class="wireframe-element header">HEADER</div>
+                    <div class="wireframe-element navbar">NAVBAR</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>📚 Klas Informatie</h3>
+                                <p>Klasnaam en beschrijving</p>
+                                <p>👩‍🏫 Docent informatie</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h3>👥 Klasgenoten</h3>
+                                <p>Lijst van medestudenten</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element content">
+                        <h3>📖 Lessen</h3>
+                        <p>Chronologische lijst van lessen</p>
+                        <p>Titel, beschrijving, datum</p>
+                    </div>
+                    
+                    <div class="wireframe-element footer">FOOTER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation & Layout -->
+        <div class="wireframe-section" id="navigation">
+            <div class="wireframe-header">7. 🧭 Navigatie & Layout Structure</div>
+            <div class="wireframe-content">
+                
+                <div class="wireframe">
+                    <div class="wireframe-title">Algemene Layout Structuur</div>
+                    
+                    <div class="wireframe-element header">
+                        🎓 HEADER - EduLearn Logo | Welkomstbericht | Gebruiker Info
+                    </div>
+                    
+                    <div class="wireframe-element navbar">
+                        NAVBAR - Dynamische navigatie op basis van gebruikersrol
+                    </div>
+                    
+                    <div class="wireframe-element content" style="min-height: 200px;">
+                        MAIN CONTENT AREA
+                        <br>Responsieve content container
+                        <br>Flexibele layouts per pagina
+                    </div>
+                    
+                    <div class="wireframe-element footer">
+                        FOOTER - Altijd onderaan | Links | Contact | Copyright
+                    </div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Navigatie Flow</div>
+                    
+                    <h4>🏠 Publieke Pagina's</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-box">Homepage</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Login</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Register</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Nieuws</div>
+                    </div>
+                    
+                    <h4>👨‍🎓 Student Flow</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-box">Student Dashboard</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Klas Details</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Les Bekijken</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Opdracht Details</div>
+                    </div>
+                    
+                    <h4>👩‍🏫 Docent Flow</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-box">Docent Dashboard</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Klassen Overzicht</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Klas Beheer</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Teacher Admin</div>
+                    </div>
+                    
+                    <h4>👑 Admin Flow</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-box">Admin Dashboard</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Gebruikersbeheer</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Rapporten</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Instellingen</div>
+                    </div>
+                </div>
+
+                <div class="wireframe">
+                    <div class="wireframe-title">Responsive Gedrag</div>
+                    
+                    <div class="wireframe-row">
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h4>🖥️ Desktop Layout</h4>
+                                <p>• Volledige horizontale navigatie</p>
+                                <p>• Multi-column layouts</p>
+                                <p>• Sidebar ondersteuning</p>
+                                <p>• Uitgebreide tabellen</p>
+                            </div>
+                        </div>
+                        <div class="wireframe-col-6">
+                            <div class="wireframe-element content">
+                                <h4>📱 Mobile Layout</h4>
+                                <p>• Hamburger menu</p>
+                                <p>• Single column stacking</p>
+                                <p>• Touch-vriendelijke buttons</p>
+                                <p>• Scroll-bare tabellen</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wireframe-element content">
+                        <h4>🎨 Design Principes</h4>
+                        <p>• Consistente kleurenschema (Blauw/Grijs theme)</p>
+                        <p>• Duidelijke hiërarchie met headers</p>
+                        <p>• Toegankelijke contrast ratios</p>
+                        <p>• Intuïtieve iconografie</p>
+                        <p>• Loading states en feedback</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Notes -->
+        <div class="wireframe-section">
+            <div class="wireframe-header">🔧 Technische Notities</div>
+            <div class="wireframe-content">
+                <div class="wireframe-element content">
+                    <h3>Key Features per Wireframe:</h3>
+                    <ul style="text-align: left; color: #2c3e50;">
+                        <li><strong>Responsive Design:</strong> Alle layouts passen zich aan verschillende schermformaten</li>
+                        <li><strong>Role-based Navigation:</strong> Menuopties veranderen op basis van gebruikersrol</li>
+                        <li><strong>Consistent Styling:</strong> Herbruikbare components en kleuren</li>
+                        <li><strong>User Feedback:</strong> Duidelijke success/error berichten</li>
+                        <li><strong>Accessibility:</strong> Keyboard navigatie en screen reader support</li>
+                        <li><strong>Security:</strong> Geautoriseerde toegang tot gevoelige pagina's</li>
+                        <li><strong>Performance:</strong> Efficiënte data loading en caching</li>
+                    </ul>
+                </div>
+                
+                <div class="wireframe-element content">
+                    <h3>🎯 Gebruikersuitgangen (User Journeys):</h3>
+                    <p><strong>Nieuwe Student:</strong> Homepage → Register → Student Dashboard → Klas bekijken</p>
+                    <p><strong>Docent Klasbeheer:</strong> Login → Dashboard → Klassen → Nieuwe klas → Studenten toevoegen</p>
+                    <p><strong>Admin Gebruikersbeheer:</strong> Login → Admin Dashboard → Gebruikers → Promoveer/Verwijder</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -27,6 +27,7 @@ class RegisterView {
                 <select id="role" name="role" required>
                     <option value="student">Student</option>
                     <option value="teacher">Docent</option>
+                    <option value="admin">Administrator</option>
                 </select>
 
                 <button type="submit" class="btn">Account aanmaken</button>

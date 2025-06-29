@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn Acceptatietesten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 20px 0 10px 0;
+        }
+
+        .test-case {
+            background: white;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-header.sad-path {
+            background: #e74c3c;
+        }
+
+        .test-content {
+            padding: 20px;
+        }
+
+        .test-meta {
+            background: #ecf0f1;
+            padding: 10px 20px;
+            border-bottom: 1px solid #bdc3c7;
+            font-size: 0.9em;
+        }
+
+        .test-steps {
+            margin: 15px 0;
+        }
+
+        .test-steps ol {
+            padding-left: 25px;
+        }
+
+        .test-steps li {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .expected-result {
+            background: #d5f4e6;
+            border: 1px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .expected-result h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .sad-path .expected-result {
+            background: #fdeaea;
+            border-color: #e74c3c;
+        }
+
+        .sad-path .expected-result h4 {
+            color: #e74c3c;
+        }
+
+        .test-data {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .test-data h4 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .priority.high {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .priority.medium {
+            background: #f39c12;
+            color: white;
+        }
+
+        .priority.low {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .category {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            background: #34495e;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .toc {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .toc a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .overview {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .prerequisites {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .prerequisites h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .test-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 EduLearn Platform Acceptatietesten</h1>
+        
+        <div class="overview">
+            <h2>📋 Test Overzicht</h2>
+            <p>Deze acceptatietesten valideren alle belangrijke functionaliteiten van het EduLearn platform. De testen dekken zowel succesvolle scenario's (happy path) als foutafhandeling (sad path).</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">9</div>
+                    <div>Totaal Testen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div>Happy Path</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div>Sad Path</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div>Gebruikersrollen</div>
+                </div>
+            </div>
+            
+            <div class="prerequisites">
+                <h4>🔧 Voorwaarden voor Testen:</h4>
+                <ul>
+                    <li>XAMPP server draait (Apache + MySQL)</li>
+                    <li>EduLearn database is aangemaakt en gevuld met test data</li>
+                    <li>Applicatie bereikbaar via http://localhost/EduLearn/public/</li>
+                    <li>Browser met JavaScript ingeschakeld</li>
+                    <li>Test accounts aanwezig (student, docent, admin)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="toc">
+            <h2>📑 Test Cases</h2>
+            <ul>
+                <li><a href="#test-01">AT-01: Gebruiker Registratie (Happy Path)</a></li>
+                <li><a href="#test-02">AT-02: Gebruiker Login (Happy Path)</a></li>
+                <li><a href="#test-03">AT-03: Docent Klas Aanmaken (Happy Path)</a></li>
+                <li><a href="#test-04">AT-04: Student Inschrijven in Klas (Happy Path)</a></li>
+                <li><a href="#test-05">AT-05: Admin Gebruiker Promoveren (Happy Path)</a></li>
+                <li><a href="#test-06">AT-06: Docent Dashboard Navigatie (Happy Path)</a></li>
+                <li><a href="#test-07">AT-07: Student Dashboard Weergave (Happy Path)</a></li>
+                <li><a href="#test-08">AT-08: Login met Onjuiste Gegevens (Sad Path)</a></li>
+                <li><a href="#test-09">AT-09: Ongeautoriseerde Toegang tot Admin (Sad Path)</a></li>
+            </ul>
+        </div>
+
+        <!-- Happy Path Tests -->
+        <h2>✅ Happy Path Testen</h2>
+
+        <!-- Test 1 -->
+        <div class="test-case" id="test-01">
+            <div class="test-header">
+                <span>AT-01: Gebruiker Registratie</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Authenticatie</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat nieuwe gebruikers zich succesvol kunnen registreren
+            </div>
+            <div class="test-content">
+                <div class="test-data">
+                    <h4>📝 Test Data:</h4>
+                    <ul>
+                        <li><strong>Naam:</strong> Jan de Vries</li>
+                        <li><strong>Email:</strong> jan.devries@test.nl</li>
+                        <li><strong>Wachtwoord:</strong> TestWachtwoord123!</li>
+                        <li><strong>Rol:</strong> Student</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Navigeer naar http://localhost/EduLearn/public/</li>
+                        <li>Klik op "Registreren" knop in de navbar</li>
+                        <li>Vul het registratieformulier in met de test data</li>
+                        <li>Selecteer "Student" als rol</li>
+                        <li>Klik op "Registreren" knop</li>
+                        <li>Verifieer dat je wordt doorgestuurd naar het student dashboard</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Gebruiker wordt succesvol aangemaakt in de database</li>
+                        <li>Wachtwoord wordt gehashed opgeslagen</li>
+                        <li>Gebruiker wordt automatisch ingelogd</li>
+                        <li>Redirect naar student dashboard (/dashboard)</li>
+                        <li>Welkomstbericht toont "Welkom terug, Jan de Vries!"</li>
+                        <li>Navbar toont student-specifieke menu items</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2 -->
+        <div class="test-case" id="test-02">
+            <div class="test-header">
+                <span>AT-02: Gebruiker Login</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Authenticatie</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat bestaande gebruikers succesvol kunnen inloggen
+            </div>
+            <div class="test-content">
+                <div class="test-data">
+                    <h4>📝 Test Data:</h4>
+                    <ul>
+                        <li><strong>Email:</strong> docent@edulearn.nl</li>
+                        <li><strong>Wachtwoord:</strong> docent123</li>
+                        <li><strong>Verwachte Rol:</strong> teacher</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Navigeer naar http://localhost/EduLearn/public/login</li>
+                        <li>Vul email in: docent@edulearn.nl</li>
+                        <li>Vul wachtwoord in: docent123</li>
+                        <li>Klik op "Inloggen" knop</li>
+                        <li>Verifieer redirect en dashboard inhoud</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Successvolle authenticatie</li>
+                        <li>Sessie wordt aangemaakt met gebruikersgegevens</li>
+                        <li>Redirect naar docent dashboard (/dashboard)</li>
+                        <li>Navbar toont: Dashboard | Klassen | Teacher Admin | Nieuws | Logout</li>
+                        <li>Dashboard toont docentspecifieke content en acties</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3 -->
+        <div class="test-case" id="test-03">
+            <div class="test-header">
+                <span>AT-03: Docent Klas Aanmaken</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Klasbeheer</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat docenten nieuwe klassen kunnen aanmaken
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Gebruiker is ingelogd als docent</li>
+                        <li>Gebruiker bevindt zich op docent dashboard</li>
+                    </ul>
+                </div>
+                
+                <div class="test-data">
+                    <h4>📝 Test Data:</h4>
+                    <ul>
+                        <li><strong>Klasnaam:</strong> Wiskunde 3A</li>
+                        <li><strong>Beschrijving:</strong> Geavanceerde wiskunde voor derdejaarsstudenten</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Klik op "Klassen" in de navbar</li>
+                        <li>Klik op "Nieuwe Klas Maken" knop</li>
+                        <li>Vul klasnaam in: "Wiskunde 3A"</li>
+                        <li>Vul beschrijving in: "Geavanceerde wiskunde voor derdejaarsstudenten"</li>
+                        <li>Klik op "Klas Aanmaken" knop</li>
+                        <li>Verifieer redirect naar klassenoverzicht</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Klas wordt opgeslagen in database met juiste teacher_id</li>
+                        <li>Redirect naar klassenoverzicht (/classes)</li>
+                        <li>Nieuwe klas "Wiskunde 3A" verschijnt in de lijst</li>
+                        <li>Klas toont 0 ingeschreven studenten</li>
+                        <li>Acties beschikbaar: Bekijk Details, Verwijder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4 -->
+        <div class="test-case" id="test-04">
+            <div class="test-header">
+                <span>AT-04: Student Inschrijven in Klas</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Klasbeheer</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat docenten studenten kunnen inschrijven in hun klassen
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Docent is ingelogd</li>
+                        <li>Er bestaat een klas eigendom van de docent</li>
+                        <li>Er bestaat minimaal 1 student in het systeem</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Navigeer naar "Klassen" overzicht</li>
+                        <li>Klik op "Bekijk Details" bij een bestaande klas</li>
+                        <li>Scroll naar "Student Beheer" sectie</li>
+                        <li>Selecteer een student uit de dropdown "Beschikbare Studenten"</li>
+                        <li>Klik op "Student Toevoegen" knop</li>
+                        <li>Verifieer dat student verschijnt in "Ingeschreven Studenten" tabel</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Student wordt toegevoegd aan class_enrollments tabel</li>
+                        <li>Student verschijnt in "Ingeschreven Studenten" lijst</li>
+                        <li>Student verdwijnt uit "Beschikbare Studenten" dropdown</li>
+                        <li>Aantal studenten in klas wordt bijgewerkt</li>
+                        <li>"Uitschrijven" knop beschikbaar bij student naam</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5 -->
+        <div class="test-case" id="test-05">
+            <div class="test-header">
+                <span>AT-05: Admin Gebruiker Promoveren</span>
+                <span>
+                    <span class="priority medium">MEDIUM</span>
+                    <span class="category">Admin</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat admins gebruikers kunnen promoveren tot admin rol
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Gebruiker is ingelogd als admin</li>
+                        <li>Er bestaat een docent die gepromoveerd kan worden</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Login als admin (admin@edulearn.nl)</li>
+                        <li>Navigeer naar Admin Dashboard</li>
+                        <li>Klik op "Gebruikersbeheer" knop</li>
+                        <li>Zoek een docent in de gebruikerstabel</li>
+                        <li>Klik op "Promoveer naar Admin" bij de geselecteerde docent</li>
+                        <li>Bevestig de promotie in de popup</li>
+                        <li>Verifieer dat de rol is bijgewerkt</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Gebruiker rol wordt bijgewerkt naar 'admin' in database</li>
+                        <li>Succesmelding verschijnt: "Gebruiker succesvol gepromoveerd"</li>
+                        <li>Gebruikerstabel toont bijgewerkte rol</li>
+                        <li>"Promoveer" knop verdwijnt (wordt "Reeds admin")</li>
+                        <li>Gebruiker kan nu admin functies gebruiken bij volgende login</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6 -->
+        <div class="test-case" id="test-06">
+            <div class="test-header">
+                <span>AT-06: Docent Dashboard Navigatie</span>
+                <span>
+                    <span class="priority medium">MEDIUM</span>
+                    <span class="category">Navigatie</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat alle navigatie-elementen voor docenten correct functioneren
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Docent is ingelogd</li>
+                        <li>Docent heeft minimaal 1 klas aangemaakt</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Verifieer navbar bevat: Dashboard | Klassen | Teacher Admin | Nieuws | Logout</li>
+                        <li>Klik op "Dashboard" - verifieer docent dashboard wordt getoond</li>
+                        <li>Klik op "Klassen" - verifieer klassenoverzicht wordt getoond</li>
+                        <li>Klik op "Teacher Admin" - verifieer student management pagina</li>
+                        <li>Klik op "Nieuws" - verifieer nieuwspagina wordt getoond</li>
+                        <li>Test breadcrumb navigatie en "terug" knoppen</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Alle navbar links leiden naar de juiste pagina's</li>
+                        <li>Aktieve pagina wordt gemarkeerd in navbar</li>
+                        <li>Geen 404 errors of broken links</li>
+                        <li>Pagina's laden binnen 2 seconden</li>
+                        <li>Responsive gedrag op mobiele apparaten</li>
+                        <li>Logout functionaliteit werkt correct</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 7 -->
+        <div class="test-case" id="test-07">
+            <div class="test-header">
+                <span>AT-07: Student Dashboard Weergave</span>
+                <span>
+                    <span class="priority medium">MEDIUM</span>
+                    <span class="category">Dashboard</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat student dashboard alle relevante informatie toont
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Student is ingelogd</li>
+                        <li>Student is ingeschreven in minimaal 1 klas</li>
+                        <li>Er bestaan lessen en opdrachten in het systeem</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Login als student (student@edulearn.nl)</li>
+                        <li>Verifieer dat student dashboard wordt getoond</li>
+                        <li>Controleer "Mijn Klassen" sectie</li>
+                        <li>Controleer "Recente Lessen" sectie</li>
+                        <li>Controleer "Mijn Opdrachten" sectie</li>
+                        <li>Test klikken op klas voor details</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>✅ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Dashboard toont welkomstbericht met student naam</li>
+                        <li>"Mijn Klassen" toont alle ingeschreven klassen</li>
+                        <li>"Recente Lessen" toont laatste lessen chronologisch</li>
+                        <li>"Mijn Opdrachten" toont opdrachten met deadlines</li>
+                        <li>Klasnamen zijn klikbaar en leiden naar klas details</li>
+                        <li>Navbar toont alleen student-toegestane links</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sad Path Tests -->
+        <h2>❌ Sad Path Testen</h2>
+
+        <!-- Test 8 -->
+        <div class="test-case sad-path" id="test-08">
+            <div class="test-header sad-path">
+                <span>AT-08: Login met Onjuiste Gegevens</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Authenticatie</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat het systeem foutafhandeling correct implementeert bij onjuiste login gegevens
+            </div>
+            <div class="test-content">
+                <div class="test-data">
+                    <h4>📝 Test Data (Onjuist):</h4>
+                    <ul>
+                        <li><strong>Email:</strong> nietbestaand@test.nl</li>
+                        <li><strong>Wachtwoord:</strong> foutWachtwoord123</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Navigeer naar login pagina</li>
+                        <li>Vul onjuist email adres in: nietbestaand@test.nl</li>
+                        <li>Vul onjuist wachtwoord in: foutWachtwoord123</li>
+                        <li>Klik op "Inloggen" knop</li>
+                        <li>Verifieer foutmelding en gedrag</li>
+                        <li>Test ook bestaand email met fout wachtwoord</li>
+                        <li>Test lege velden</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>❌ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Foutmelding: "Ongeldige inloggegevens"</li>
+                        <li>Gebruiker blijft op login pagina</li>
+                        <li>Geen sessie wordt aangemaakt</li>
+                        <li>Wachtwoord veld wordt geleegd (security)</li>
+                        <li>Email veld behoudt waarde voor gebruiksgemak</li>
+                        <li>Geen SQL injection of andere security issues</li>
+                        <li>Geen gedetailleerde error informatie gelekt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 9 -->
+        <div class="test-case sad-path" id="test-09">
+            <div class="test-header sad-path">
+                <span>AT-09: Ongeautoriseerde Toegang tot Admin</span>
+                <span>
+                    <span class="priority high">HOOG</span>
+                    <span class="category">Beveiliging</span>
+                </span>
+            </div>
+            <div class="test-meta">
+                <strong>Doel:</strong> Valideren dat niet-admin gebruikers geen toegang hebben tot admin functionaliteiten
+            </div>
+            <div class="test-content">
+                <div class="prerequisites">
+                    <h4>📋 Voorwaarden:</h4>
+                    <ul>
+                        <li>Student account beschikbaar</li>
+                        <li>Docent account beschikbaar</li>
+                        <li>Admin routes bestaan in het systeem</li>
+                    </ul>
+                </div>
+                
+                <div class="test-steps">
+                    <h4>🚀 Test Stappen:</h4>
+                    <ol>
+                        <li>Login als student (student@edulearn.nl)</li>
+                        <li>Probeer direct te navigeren naar: /admin/dashboard</li>
+                        <li>Probeer direct te navigeren naar: /admin/users</li>
+                        <li>Logout en login als docent</li>
+                        <li>Herhaal stappen 2-3 met docent account</li>
+                        <li>Verifieer redirect gedrag en foutafhandeling</li>
+                        <li>Test ook niet-ingelogde gebruiker toegang</li>
+                    </ol>
+                </div>
+                
+                <div class="expected-result">
+                    <h4>❌ Verwacht Resultaat:</h4>
+                    <ul>
+                        <li>Student wordt geredirect naar homepage of login</li>
+                        <li>Docent wordt geredirect naar homepage of eigen dashboard</li>
+                        <li>Geen admin functies zichtbaar in navbar voor non-admins</li>
+                        <li>HTTP 403 Forbidden of redirect naar toegestane pagina</li>
+                        <li>Geen admin menu items of knoppen zichtbaar</li>
+                        <li>Gebruikersbeheer interface niet toegankelijk</li>
+                        <li>Session hijacking protection actief</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Summary -->
+        <div class="overview">
+            <h2>📊 Test Resultaten Template</h2>
+            <p>Gebruik onderstaande template om test resultaten vast te leggen:</p>
+            
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 15px 0;">
+                <h4>Test Resultaat Format:</h4>
+                <pre style="font-family: monospace; color: #495057;">
+Test ID: AT-XX
+Datum: [DD-MM-YYYY]
+Tester: [Naam]
+Browser: [Chrome/Firefox/Safari + Versie]
+Status: [GESLAAGD/GEFAALD/GEBLOKKEERD]
+
+Opmerkingen:
+- [Eventuele afwijkingen van verwacht gedrag]
+- [Performance observaties]
+- [Browser-specifieke issues]
+
+Screenshot: [Link naar screenshot indien van toepassing]
+                </pre>
+            </div>
+        </div>
+
+        <!-- Test Environment -->
+        <div class="overview">
+            <h2>🔧 Test Omgeving Specificaties</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div><strong>Server</strong></div>
+                    <div>XAMPP 8.0+</div>
+                </div>
+                <div class="stat-card">
+                    <div><strong>PHP</strong></div>
+                    <div>8.0 of hoger</div>
+                </div>
+                <div class="stat-card">
+                    <div><strong>MySQL</strong></div>
+                    <div>8.0 of hoger</div>
+                </div>
+                <div class="stat-card">
+                    <div><strong>Browsers</strong></div>
+                    <div>Chrome, Firefox, Safari</div>
+                </div>
+            </div>
+            
+            <h3>📋 Pre-Test Checklist:</h3>
+            <ul style="color: #495057;">
+                <li>☐ Database backup gemaakt</li>
+                <li>☐ Test data geladen via setup_database.php</li>
+                <li>☐ Alle services draaien (Apache, MySQL)</li>
+                <li>☐ Error logging ingeschakeld</li>
+                <li>☐ Browser cache geleegd</li>
+                <li>☐ Netwerk connectiviteit gecontroleerd</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

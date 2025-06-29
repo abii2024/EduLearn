@@ -32,6 +32,10 @@ class DashboardController extends BaseController
             $recentAssignments = Assignment::getRecentByTeacher($userId);
             DashboardTeacherView::Render($name, $lessons, $recentAssignments);
 
+        } elseif ($role === 'admin') {
+            header("Location: /EduLearn/public/admin");
+            exit;
+
         } else {
             header("Location: /EduLearn/public/");
             exit;

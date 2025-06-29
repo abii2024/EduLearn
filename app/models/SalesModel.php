@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/interfaces/ORMinterface.php';
 
-class SalesModel extends BaseModel
+class SalesModel extends BaseModel implements ORMinterface
 {
     protected static $table = 'sales';
 
@@ -110,5 +111,21 @@ class SalesModel extends BaseModel
                 'created_at' => date('Y-m-d H:i:s')
             ];
         }
+    }
+
+    // ORM interface methods
+    public static function findByID($id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM sales WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function findAll()
+    {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM sales");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

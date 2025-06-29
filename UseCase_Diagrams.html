@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn Use Case Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin: 40px 0 20px 0;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 25px 0 15px 0;
+        }
+
+        .diagram-section {
+            background: white;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .diagram-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .diagram-content {
+            padding: 20px;
+        }
+
+        .mermaid {
+            text-align: center;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .use-case-description {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case-description h4 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .actor-list {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .actor-list h4 {
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+
+        .use-case-list {
+            background: #f0fdf4;
+            border: 1px solid #22c55e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .use-case-list h4 {
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+
+        .relationships {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .relationships h4 {
+            color: #d97706;
+            margin-bottom: 10px;
+        }
+
+        .toc {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .toc a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .overview {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .legend {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .legend h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .actor-color { background: #e3f2fd; border: 2px solid #2196f3; }
+        .usecase-color { background: #e8f5e8; border: 2px solid #4caf50; }
+        .system-color { background: #fff3e0; border: 2px solid #ff9800; }
+
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+            }
+            
+            .mermaid {
+                padding: 10px;
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 EduLearn Platform Use Case Diagrams</h1>
+        
+        <div class="overview">
+            <h2>📋 Use Case Overzicht</h2>
+            <p>Deze Use Case Diagrams tonen alle functionaliteiten van het EduLearn platform en hoe verschillende gebruikersrollen (actors) ermee interacteren. Elk diagram focust op specifieke aspecten van het systeem.</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div>Diagrams</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div>Actors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">25+</div>
+                    <div>Use Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div>Subsystemen</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h4>🎨 Diagram Legenda:</h4>
+                <div class="legend-item">
+                    <div class="legend-color actor-color"></div>
+                    <span><strong>Actor</strong> - Persoon of systeem dat interacteert met EduLearn</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color usecase-color"></div>
+                    <span><strong>Use Case</strong> - Specifieke functionaliteit of actie in het systeem</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color system-color"></div>
+                    <span><strong>Systeem Boundary</strong> - Grens van het EduLearn platform</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="toc">
+            <h2>📑 Diagram Index</h2>
+            <ul>
+                <li><a href="#overview-diagram">1. Systeem Overzicht Diagram</a></li>
+                <li><a href="#auth-diagram">2. Authenticatie & Gebruikersbeheer</a></li>
+                <li><a href="#education-diagram">3. Onderwijs & Klasbeheer</a></li>
+                <li><a href="#admin-diagram">4. Administratie & Systeembeheer</a></li>
+            </ul>
+        </div>
+
+        <!-- System Overview Diagram -->
+        <div class="diagram-section" id="overview-diagram">
+            <div class="diagram-header">1. 🏛️ EduLearn Systeem Overzicht</div>
+            <div class="diagram-content">
+                <div class="use-case-description">
+                    <h4>📝 Diagram Beschrijving:</h4>
+                    <p>Dit high-level diagram toont alle primary actors en hun hoofdfunctionaliteiten binnen het EduLearn platform. Het geeft een volledig overzicht van wat elke gebruikersrol kan doen in het systeem.</p>
+                </div>
+
+                <div class="mermaid">
+graph TB
+    %% Actors
+    Student[👨‍🎓 Student]
+    Teacher[👩‍🏫 Docent]
+    Admin[👑 Administrator]
+    Guest[🔓 Gast Gebruiker]
+    
+    %% System boundary
+    subgraph EduLearn["🎓 EduLearn Platform"]
+        %% Authentication Use Cases
+        UC1[Registreren]
+        UC2[Inloggen]
+        UC3[Uitloggen]
+        UC4[Wachtwoord Wijzigen]
+        
+        %% Student Use Cases
+        UC5[Dashboard Bekijken]
+        UC6[Klassen Bekijken]
+        UC7[Lessen Bekijken]
+        UC8[Opdrachten Bekijken]
+        UC9[Nieuws Lezen]
+        
+        %% Teacher Use Cases
+        UC10[Klassen Beheren]
+        UC11[Studenten Beheren]
+        UC12[Lessen Aanmaken]
+        UC13[Opdrachten Aanmaken]
+        UC14[Student Inschrijvingen]
+        UC15[Wachtwoord Reset]
+        
+        %% Admin Use Cases
+        UC16[Gebruikers Beheren]
+        UC17[Rollen Toewijzen]
+        UC18[Systeem Statistieken]
+        UC19[Gebruikers Verwijderen]
+        
+        %% Public Use Cases
+        UC20[Homepage Bekijken]
+        UC21[Informatie Raadplegen]
+    end
+    
+    %% Student Relationships
+    Student --> UC2
+    Student --> UC3
+    Student --> UC4
+    Student --> UC5
+    Student --> UC6
+    Student --> UC7
+    Student --> UC8
+    Student --> UC9
+    
+    %% Teacher Relationships
+    Teacher --> UC2
+    Teacher --> UC3
+    Teacher --> UC4
+    Teacher --> UC5
+    Teacher --> UC10
+    Teacher --> UC11
+    Teacher --> UC12
+    Teacher --> UC13
+    Teacher --> UC14
+    Teacher --> UC15
+    Teacher --> UC9
+    
+    %% Admin Relationships
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+    Admin --> UC16
+    Admin --> UC17
+    Admin --> UC18
+    Admin --> UC19
+    Admin --> UC9
+    
+    %% Guest Relationships
+    Guest --> UC1
+    Guest --> UC2
+    Guest --> UC20
+    Guest --> UC21
+    
+    %% Styling
+    classDef actor fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef usecase fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef system fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    
+    class Student,Teacher,Admin,Guest actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14,UC15,UC16,UC17,UC18,UC19,UC20,UC21 usecase
+    class EduLearn system
+                </div>
+
+                <div class="actor-list">
+                    <h4>👥 Primary Actors:</h4>
+                    <ul>
+                        <li><strong>👨‍🎓 Student:</strong> Leerling die toegang heeft tot klassen, lessen en opdrachten</li>
+                        <li><strong>👩‍🏫 Docent:</strong> Onderwijzer die klassen beheert en content aanmaakt</li>
+                        <li><strong>👑 Administrator:</strong> Systeembeheerder met volledige toegang</li>
+                        <li><strong>🔓 Gast Gebruiker:</strong> Niet-geregistreerde bezoeker van de website</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-list">
+                    <h4>🎯 Hoofd Use Cases:</h4>
+                    <ul>
+                        <li><strong>Authenticatie:</strong> Registreren, Inloggen, Uitloggen</li>
+                        <li><strong>Onderwijs:</strong> Klassen, Lessen, Opdrachten beheren/bekijken</li>
+                        <li><strong>Gebruikersbeheer:</strong> Accounts, Rollen, Permissies</li>
+                        <li><strong>Informatie:</strong> Dashboard, Nieuws, Statistieken</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authentication Diagram -->
+        <div class="diagram-section" id="auth-diagram">
+            <div class="diagram-header">2. 🔐 Authenticatie & Gebruikersbeheer</div>
+            <div class="diagram-content">
+                <div class="use-case-description">
+                    <h4>📝 Diagram Beschrijving:</h4>
+                    <p>Dit diagram toont alle authenticatie-gerelateerde functionaliteiten en gebruikersbeheer processen. Het includeert registratie, login, rolbeheer en account management.</p>
+                </div>
+
+                <div class="mermaid">
+graph TB
+    %% Actors
+    Guest[🔓 Gast Gebruiker]
+    User[👤 Geregistreerde Gebruiker]
+    Admin[👑 Administrator]
+    
+    %% System boundary
+    subgraph AuthSystem["🔐 Authenticatie & Gebruikersbeheer"]
+        %% Registration & Login
+        UC1[Account Registreren]
+        UC2[Inloggen]
+        UC3[Uitloggen]
+        UC4[Wachtwoord Vergeten]
+        UC5[Wachtwoord Reset]
+        
+        %% Profile Management
+        UC6[Profiel Bekijken]
+        UC7[Profiel Wijzigen]
+        UC8[Wachtwoord Wijzigen]
+        UC9[Account Verwijderen]
+        
+        %% Admin User Management
+        UC10[Alle Gebruikers Bekijken]
+        UC11[Gebruiker Promoveren]
+        UC12[Gebruiker Degraderen]
+        UC13[Gebruiker Verwijderen]
+        UC14[Gebruiker Zoeken]
+        UC15[Rol Toewijzen]
+        UC16[Permissies Beheren]
+        
+        %% Session Management
+        UC17[Sessie Valideren]
+        UC18[Automatisch Uitloggen]
+        UC19[Meervoudige Login Detectie]
+    end
+    
+    %% Email System (External)
+    EmailSystem[📧 Email Systeem]
+    
+    %% Guest Relationships
+    Guest --> UC1
+    Guest --> UC2
+    Guest --> UC4
+    
+    %% User Relationships
+    User --> UC2
+    User --> UC3
+    User --> UC6
+    User --> UC7
+    User --> UC8
+    User --> UC9
+    
+    %% Admin Relationships
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC15
+    Admin --> UC16
+    
+    %% System Relationships
+    UC4 --> EmailSystem
+    UC5 --> EmailSystem
+    UC2 --> UC17
+    UC17 --> UC18
+    
+    %% Include Relationships
+    UC1 -.->|includes| UC17
+    UC8 -.->|includes| UC17
+    UC11 -.->|includes| UC15
+    
+    %% Extend Relationships
+    UC2 -.->|extends| UC19
+    UC3 -.->|extends| UC18
+    
+    %% Styling
+    classDef actor fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef usecase fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef system fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef external fill:#ffebee,stroke:#f44336,stroke-width:2px
+    
+    class Guest,User,Admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14,UC15,UC16,UC17,UC18,UC19 usecase
+    class AuthSystem system
+    class EmailSystem external
+                </div>
+
+                <div class="relationships">
+                    <h4>🔗 Belangrijke Relaties:</h4>
+                    <ul>
+                        <li><strong>Include:</strong> Registreren en Wachtwoord wijzigen includeren sessie validatie</li>
+                        <li><strong>Extend:</strong> Login kan uitgebreid worden met meervoudige login detectie</li>
+                        <li><strong>External:</strong> Email systeem wordt gebruikt voor wachtwoord reset</li>
+                        <li><strong>Inheritance:</strong> Admin erft alle gebruiker functionaliteiten</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Management Diagram -->
+        <div class="diagram-section" id="education-diagram">
+            <div class="diagram-header">3. 📚 Onderwijs & Klasbeheer</div>
+            <div class="diagram-content">
+                <div class="use-case-description">
+                    <h4>📝 Diagram Beschrijving:</h4>
+                    <p>Dit diagram richt zich op de core onderwijsfunctionaliteiten: klasbeheer, lessen, opdrachten en student-docent interacties. Het toont hoe onderwijs content wordt beheerd en geconsumeerd.</p>
+                </div>
+
+                <div class="mermaid">
+graph TB
+    %% Actors
+    Student[👨‍🎓 Student]
+    Teacher[👩‍🏫 Docent]
+    TeacherAdmin[👨‍💼 Docent Administrator]
+    
+    %% System boundary
+    subgraph EduSystem["📚 Onderwijs & Klasbeheer Systeem"]
+        %% Class Management
+        UC1[Klassen Bekijken]
+        UC2[Klas Aanmaken]
+        UC3[Klas Wijzigen]
+        UC4[Klas Verwijderen]
+        UC5[Klas Details Bekijken]
+        
+        %% Student Management
+        UC6[Studenten Bekijken]
+        UC7[Student Inschrijven]
+        UC8[Student Uitschrijven]
+        UC9[Student Aanmaken]
+        UC10[Student Wachtwoord Reset]
+        UC11[Beschikbare Studenten Bekijken]
+        
+        %% Lesson Management
+        UC12[Lessen Bekijken]
+        UC13[Les Aanmaken]
+        UC14[Les Wijzigen]
+        UC15[Les Verwijderen]
+        UC16[Les Content Uploaden]
+        
+        %% Assignment Management
+        UC17[Opdrachten Bekijken]
+        UC18[Opdracht Aanmaken]
+        UC19[Opdracht Wijzigen]
+        UC20[Opdracht Verwijderen]
+        UC21[Deadline Instellen]
+        
+        %% Student Learning
+        UC22[Klas Inhoud Bekijken]
+        UC23[Les Volgen]
+        UC24[Opdracht Bekijken]
+        UC25[Voortgang Bekijken]
+        UC26[Klasgenoten Bekijken]
+        
+        %% Dashboard & Reports
+        UC27[Student Dashboard]
+        UC28[Docent Dashboard]
+        UC29[Klas Statistieken]
+        UC30[Voortgang Rapportage]
+    end
+    
+    %% Student Relationships
+    Student --> UC1
+    Student --> UC5
+    Student --> UC12
+    Student --> UC17
+    Student --> UC22
+    Student --> UC23
+    Student --> UC24
+    Student --> UC25
+    Student --> UC26
+    Student --> UC27
+    
+    %% Teacher Relationships
+    Teacher --> UC1
+    Teacher --> UC2
+    Teacher --> UC3
+    Teacher --> UC4
+    Teacher --> UC5
+    Teacher --> UC6
+    Teacher --> UC7
+    Teacher --> UC8
+    Teacher --> UC11
+    Teacher --> UC12
+    Teacher --> UC13
+    Teacher --> UC14
+    Teacher --> UC15
+    Teacher --> UC16
+    Teacher --> UC17
+    Teacher --> UC18
+    Teacher --> UC19
+    Teacher --> UC20
+    Teacher --> UC21
+    Teacher --> UC28
+    Teacher --> UC29
+    Teacher --> UC30
+    
+    %% Teacher Admin Relationships (extends Teacher)
+    TeacherAdmin --> UC9
+    TeacherAdmin --> UC10
+    
+    %% Include Relationships
+    UC2 -.->|includes| UC1
+    UC7 -.->|includes| UC11
+    UC13 -.->|includes| UC12
+    UC18 -.->|includes| UC17
+    UC27 -.->|includes| UC22
+    UC28 -.->|includes| UC29
+    
+    %% Extend Relationships
+    UC5 -.->|extends| UC29
+    UC23 -.->|extends| UC25
+    UC24 -.->|extends| UC25
+    
+    %% Generalization
+    TeacherAdmin -.->|inherits| Teacher
+    
+    %% Styling
+    classDef actor fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef usecase fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef system fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    
+    class Student,Teacher,TeacherAdmin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14,UC15,UC16,UC17,UC18,UC19,UC20,UC21,UC22,UC23,UC24,UC25,UC26,UC27,UC28,UC29,UC30 usecase
+    class EduSystem system
+                </div>
+
+                <div class="actor-list">
+                    <h4>👥 Onderwijs Actors:</h4>
+                    <ul>
+                        <li><strong>👨‍🎓 Student:</strong> Ontvangt onderwijs, bekijkt content, volgt lessen</li>
+                        <li><strong>👩‍🏫 Docent:</strong> Beheert klassen, maakt content, geeft les</li>
+                        <li><strong>👨‍💼 Docent Administrator:</strong> Docent met extra student management rechten</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-list">
+                    <h4>🎯 Onderwijs Use Cases:</h4>
+                    <ul>
+                        <li><strong>Klasbeheer:</strong> Aanmaken, wijzigen, verwijderen van klassen</li>
+                        <li><strong>Studentbeheer:</strong> Inschrijvingen, accounts, wachtwoorden</li>
+                        <li><strong>Content:</strong> Lessen, opdrachten, materialen beheren</li>
+                        <li><strong>Learning:</strong> Student interactie met onderwijs content</li>
+                        <li><strong>Monitoring:</strong> Voortgang, statistieken, rapportages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Administration Diagram -->
+        <div class="diagram-section" id="admin-diagram">
+            <div class="diagram-header">4. ⚙️ Administratie & Systeembeheer</div>
+            <div class="diagram-content">
+                <div class="use-case-description">
+                    <h4>📝 Diagram Beschrijving:</h4>
+                    <p>Dit diagram toont alle administratieve en systeembeheer functionaliteiten. Het focust op high-level management, systeem configuratie en platform onderhoud.</p>
+                </div>
+
+                <div class="mermaid">
+graph TB
+    %% Actors
+    Admin[👑 Administrator]
+    SystemAdmin[🔧 Systeem Administrator]
+    NewsEditor[📰 Nieuws Editor]
+    
+    %% External Systems
+    Database[🗄️ Database Systeem]
+    FileSystem[📁 Bestandssysteem]
+    LogSystem[📋 Log Systeem]
+    
+    %% System boundary
+    subgraph AdminSystem["⚙️ Administratie & Systeembeheer"]
+        %% User Administration
+        UC1[Gebruikers Overzicht]
+        UC2[Gebruiker Promoveren]
+        UC3[Gebruiker Degraderen]
+        UC4[Gebruiker Verwijderen]
+        UC5[Bulk Acties Uitvoeren]
+        UC6[Gebruiker Zoeken/Filteren]
+        
+        %% System Statistics
+        UC7[Dashboard Statistieken]
+        UC8[Gebruiker Statistieken]
+        UC9[Activiteit Rapporten]
+        UC10[Systeem Gezondheid]
+        UC11[Performance Monitoring]
+        
+        %% Content Management
+        UC12[Nieuws Beheren]
+        UC13[Nieuws Artikel Aanmaken]
+        UC14[Nieuws Artikel Wijzigen]
+        UC15[Nieuws Artikel Verwijderen]
+        UC16[Nieuws Publiceren]
+        
+        %% System Configuration
+        UC17[Systeem Instellingen]
+        UC18[Database Onderhoud]
+        UC19[Backup Beheren]
+        UC20[Log Bestanden Bekijken]
+        UC21[Cache Beheren]
+        UC22[Foutmeldingen Monitoren]
+        
+        %% Security Management
+        UC23[Beveiligings Audit]
+        UC24[Toegang Loggen]
+        UC25[Verdachte Activiteit Detecteren]
+        UC26[IP Blokkering]
+        UC27[Sessie Beheer]
+        
+        %% Data Management
+        UC28[Data Export]
+        UC29[Data Import]
+        UC30[Database Migratie]
+        UC31[Data Cleanup]
+    end
+    
+    %% Admin Relationships
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+    Admin --> UC12
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC15
+    Admin --> UC16
+    
+    %% System Admin Relationships (extends Admin)
+    SystemAdmin --> UC10
+    SystemAdmin --> UC11
+    SystemAdmin --> UC17
+    SystemAdmin --> UC18
+    SystemAdmin --> UC19
+    SystemAdmin --> UC20
+    SystemAdmin --> UC21
+    SystemAdmin --> UC22
+    SystemAdmin --> UC23
+    SystemAdmin --> UC24
+    SystemAdmin --> UC25
+    SystemAdmin --> UC26
+    SystemAdmin --> UC27
+    SystemAdmin --> UC28
+    SystemAdmin --> UC29
+    SystemAdmin --> UC30
+    SystemAdmin --> UC31
+    
+    %% News Editor Relationships
+    NewsEditor --> UC12
+    NewsEditor --> UC13
+    NewsEditor --> UC14
+    NewsEditor --> UC15
+    NewsEditor --> UC16
+    
+    %% External System Relationships
+    UC18 --> Database
+    UC19 --> FileSystem
+    UC20 --> LogSystem
+    UC21 --> FileSystem
+    UC22 --> LogSystem
+    UC24 --> LogSystem
+    UC28 --> Database
+    UC29 --> Database
+    UC30 --> Database
+    UC31 --> Database
+    
+    %% Include Relationships
+    UC7 -.->|includes| UC8
+    UC13 -.->|includes| UC12
+    UC18 -.->|includes| UC19
+    UC23 -.->|includes| UC24
+    
+    %% Extend Relationships
+    UC1 -.->|extends| UC6
+    UC9 -.->|extends| UC11
+    UC25 -.->|extends| UC26
+    
+    %% Generalization
+    SystemAdmin -.->|inherits| Admin
+    NewsEditor -.->|specializes| Admin
+    
+    %% Styling
+    classDef actor fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    classDef usecase fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+    classDef system fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef external fill:#ffebee,stroke:#f44336,stroke-width:2px
+    
+    class Admin,SystemAdmin,NewsEditor actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14,UC15,UC16,UC17,UC18,UC19,UC20,UC21,UC22,UC23,UC24,UC25,UC26,UC27,UC28,UC29,UC30,UC31 usecase
+    class AdminSystem system
+    class Database,FileSystem,LogSystem external
+                </div>
+
+                <div class="actor-list">
+                    <h4>👥 Administratie Actors:</h4>
+                    <ul>
+                        <li><strong>👑 Administrator:</strong> Algemene systeembeheerder met gebruikersbeheer rechten</li>
+                        <li><strong>🔧 Systeem Administrator:</strong> Technische beheerder met volledige systeem toegang</li>
+                        <li><strong>📰 Nieuws Editor:</strong> Gespecialiseerde rol voor content management</li>
+                    </ul>
+                </div>
+
+                <div class="relationships">
+                    <h4>🔗 Systeem Integraties:</h4>
+                    <ul>
+                        <li><strong>Database:</strong> Alle data operaties en onderhoud</li>
+                        <li><strong>Bestandssysteem:</strong> Backup, cache en file management</li>
+                        <li><strong>Log Systeem:</strong> Monitoring, auditing en foutdetectie</li>
+                        <li><strong>Security:</strong> Toegangscontrole en beveiligingsmonitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="overview">
+            <h2>📊 Use Case Samenvatting</h2>
+            
+            <h3>🎯 Belangrijkste Bevindingen:</h3>
+            <ul>
+                <li><strong>Multi-Role Architecture:</strong> Het systeem ondersteunt 4 verschillende gebruikersrollen met specifieke rechten</li>
+                <li><strong>Comprehensive Functionality:</strong> Dekking van alle aspecten: authenticatie, onderwijs, beheer</li>
+                <li><strong>Scalable Design:</strong> Modulaire structuur met duidelijke scheiding van verantwoordelijkheden</li>
+                <li><strong>Security Focus:</strong> Uitgebreide beveiligings- en audit functionaliteiten</li>
+                <li><strong>External Integration:</strong> Integratie met email, database en filesysteem</li>
+            </ul>
+            
+            <h3>🔍 Use Case Statistieken per Actor:</h3>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div>Student Use Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div>Docent Use Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div>Admin Use Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div>Gast Use Cases</div>
+                </div>
+            </div>
+            
+            <h3>🛠️ Implementatie Prioriteiten:</h3>
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                <p><strong>Fase 1 (MVP):</strong> Authenticatie, basis klasbeheer, student dashboard</p>
+                <p><strong>Fase 2:</strong> Uitgebreid onderwijs content management, docent tools</p>
+                <p><strong>Fase 3:</strong> Geavanceerde admin functies, rapportages, monitoring</p>
+                <p><strong>Fase 4:</strong> Externe integraties, advanced security, analytics</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            er: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>

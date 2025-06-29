@@ -12,7 +12,11 @@
                 <?php if ($_SESSION['user']['role'] === 'student'): ?>
                     <li><a href="/EduLearn/public/dashboard" class="link">Dashboard</a></li>
                 <?php elseif ($_SESSION['user']['role'] === 'teacher'): ?>
+                    <li><a href="/EduLearn/public/teacher-admin" class="link">👥 Docent Admin</a></li>
                     <li><a href="/EduLearn/public/dashboard" class="link">Docentenpaneel</a></li>
+                <?php elseif ($_SESSION['user']['role'] === 'admin'): ?>
+                    <li><a href="/EduLearn/public/admin" class="link">🔧 Admin Panel</a></li>
+                    <li><a href="/EduLearn/public/dashboard" class="link">Dashboard</a></li>
                 <?php endif; ?>
                 <li><a href="/EduLearn/public/logout" class="link">Uitloggen</a></li>
             <?php else: ?>

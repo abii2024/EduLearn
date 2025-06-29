@@ -1,8 +1,9 @@
 <?php
 // app/models/Lesson.php
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/interfaces/ORMinterface.php';
 
-class Lesson extends BaseModel
+class Lesson extends BaseModel implements ORMinterface
 {
     protected static $table = 'lessons';
     
@@ -80,6 +81,22 @@ class Lesson extends BaseModel
             ORDER BY l.created_at DESC
         ");
         $stmt->execute([$classId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // ORM interface methods
+    public static function findByID($id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM lessons WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function findAll()
+    {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM lessons");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

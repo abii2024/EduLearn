@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/interfaces/ORMinterface.php';
 
-class NewsModel extends BaseModel
+class NewsModel extends BaseModel implements ORMinterface
 {
     protected static $table = 'news';
     protected $title;
@@ -69,6 +70,22 @@ class NewsModel extends BaseModel
                 'created_at' => date('Y-m-d H:i:s')
             ];
         }
+    }
+
+    // ORM interface methods
+    public static function findByID($id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM news WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function findAll()
+    {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM news");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function initializeDatabase()

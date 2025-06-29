@@ -45,6 +45,62 @@ $router->get('/logout', function() {
     AuthController::logout();
 });
 
+// Admin routes
+$router->get('/admin', function() {
+    require_once BASE_PATH . '/app/controllers/AdminController.php';
+    $controller = new AdminController();
+    $controller->showDashboard();
+});
+
+$router->get('/admin/users', function() {
+    require_once BASE_PATH . '/app/controllers/AdminController.php';
+    $controller = new AdminController();
+    $controller->showUsers();
+});
+
+$router->post('/admin/promote', function() {
+    require_once BASE_PATH . '/app/controllers/AdminController.php';
+    $controller = new AdminController();
+    $controller->promoteToAdmin();
+});
+
+$router->post('/admin/delete-user', function() {
+    require_once BASE_PATH . '/app/controllers/AdminController.php';
+    $controller = new AdminController();
+    $controller->deleteUser();
+});
+
+// Teacher Admin routes (for teachers to manage students)
+$router->get('/teacher-admin', function() {
+    require_once BASE_PATH . '/app/controllers/TeacherAdminController.php';
+    $controller = new TeacherAdminController();
+    $controller->showStudentManagement();
+});
+
+$router->post('/teacher-admin/create-student', function() {
+    require_once BASE_PATH . '/app/controllers/TeacherAdminController.php';
+    $controller = new TeacherAdminController();
+    $controller->createStudent();
+});
+
+$router->post('/teacher-admin/enroll-in-class', function() {
+    require_once BASE_PATH . '/app/controllers/TeacherAdminController.php';
+    $controller = new TeacherAdminController();
+    $controller->enrollStudentInClass();
+});
+
+$router->post('/teacher-admin/remove-from-class', function() {
+    require_once BASE_PATH . '/app/controllers/TeacherAdminController.php';
+    $controller = new TeacherAdminController();
+    $controller->removeStudentFromClass();
+});
+
+$router->post('/teacher-admin/reset-password', function() {
+    require_once BASE_PATH . '/app/controllers/TeacherAdminController.php';
+    $controller = new TeacherAdminController();
+    $controller->resetStudentPassword();
+});
+
 // Class management routes
 $router->get('/classes', function() {
     require_once BASE_PATH . '/app/controllers/ClassController.php';

@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/interfaces/ORMinterface.php';
 
-class User extends BaseModel
+class User extends BaseModel implements ORMinterface
 {
     protected static $table = 'users';
 
@@ -47,6 +48,22 @@ class User extends BaseModel
     {
         return password_verify($inputPassword, $hashedPassword);
     }
+
+    // ORM interface methods
+    public static function findByID($id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function findAll()
+    {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM users");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     public static function initializeDatabase()
     {
@@ -58,7 +75,7 @@ class User extends BaseModel
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
-            role ENUM('student', 'teacher') NOT NULL,
+            role ENUM('student', 'teacher', 'admin') NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )";
         

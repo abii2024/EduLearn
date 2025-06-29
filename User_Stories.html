@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn User Stories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin: 40px 0 20px 0;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 25px 0 15px 0;
+        }
+
+        .story-section {
+            background: white;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .story-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .story-content {
+            padding: 20px;
+        }
+
+        .user-story {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .user-story:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .story-title {
+            background: #3498db;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .story-body {
+            padding: 15px;
+        }
+
+        .story-text {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        .acceptance-criteria {
+            background: #d5f4e6;
+            border: 1px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .acceptance-criteria h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .story-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .detail-card h5 {
+            color: #495057;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .priority.high {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .priority.medium {
+            background: #f39c12;
+            color: white;
+        }
+
+        .priority.low {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .story-points {
+            background: #17a2b8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 50%;
+            font-weight: bold;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .persona {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .persona.student {
+            background: #27ae60;
+            color: white;
+        }
+
+        .persona.teacher {
+            background: #f39c12;
+            color: white;
+        }
+
+        .persona.admin {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .persona.guest {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .toc {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .toc a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .overview {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .epic {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .epic h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .notes {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .notes h5 {
+            color: #721c24;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .story-title {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .story-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 EduLearn Platform User Stories</h1>
+        
+        <div class="overview">
+            <h2>📋 User Stories Overzicht</h2>
+            <p>Deze User Stories beschrijven alle functionaliteiten van het EduLearn platform vanuit het perspectief van de eindgebruikers. Elke story volgt het format: "Als [persona] wil ik [actie] zodat [doel]" en bevat acceptatiecriteria voor implementatie.</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">32</div>
+                    <div>Totaal Stories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div>Persona's</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89</div>
+                    <div>Story Points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div>Epics</div>
+                </div>
+            </div>
+            
+            <div class="epic">
+                <h4>🎯 Product Vision:</h4>
+                <p><strong>EduLearn</strong> is een gebruiksvriendelijk online leerplatform dat studenten en docenten verbindt door middel van gestructureerde klassen, interactieve lessen en effectief beheer van onderwijscontent. Het platform biedt een veilige en schaalbare omgeving voor digitaal onderwijs.</p>
+            </div>
+        </div>
+
+        <div class="toc">
+            <h2>📑 User Stories per Epic</h2>
+            <ul>
+                <li><a href="#authentication">Epic 1: Authenticatie & Account Beheer</a></li>
+                <li><a href="#student-experience">Epic 2: Student Leerervaring</a></li>
+                <li><a href="#teacher-management">Epic 3: Docent Klasbeheer</a></li>
+                <li><a href="#content-management">Epic 4: Content & Materiaal Beheer</a></li>
+                <li><a href="#administration">Epic 5: Systeem Administratie</a></li>
+                <li><a href="#reporting">Epic 6: Rapportage & Analytics</a></li>
+            </ul>
+        </div>
+
+        <!-- Epic 1: Authentication -->
+        <div class="story-section" id="authentication">
+            <div class="story-header">Epic 1: 🔐 Authenticatie & Account Beheer</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als platform gebruiker wil ik veilig kunnen inloggen en mijn account beheren zodat mijn gegevens beschermd zijn en ik toegang heb tot de juiste functionaliteiten.</p>
+                </div>
+
+                <!-- Story 1.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-001: Account Registratie</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona guest">GAST</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>nieuwe gebruiker</strong> wil ik <strong>een account kunnen aanmaken</strong> zodat ik <strong>toegang krijg tot het EduLearn platform</strong>.
+                        </div>
+                        
+                        <div class="story-details">
+                            <div class="detail-card">
+                                <h5>Story Points</h5>
+                                <div class="detail-value">5</div>
+                            </div>
+                            <div class="detail-card">
+                                <h5>Prioriteit</h5>
+                                <div class="detail-value">Hoog</div>
+                            </div>
+                            <div class="detail-card">
+                                <h5>Sprint</h5>
+                                <div class="detail-value">1</div>
+                            </div>
+                            <div class="detail-card">
+                                <h5>Status</h5>
+                                <div class="detail-value">Gereed</div>
+                            </div>
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan mijn naam, email en wachtwoord invoeren</li>
+                                <li>Ik kan kiezen tussen de rollen 'Student' en 'Docent'</li>
+                                <li>Het systeem valideert dat het email adres uniek is</li>
+                                <li>Het wachtwoord wordt veilig gehashed opgeslagen</li>
+                                <li>Na registratie word ik automatisch ingelogd</li>
+                                <li>Ik word doorgestuurd naar het juiste dashboard</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="notes">
+                            <h5>📝 Ontwikkelaars Notities:</h5>
+                            <p>Implementeer password hashing met cost 12. Email validatie client-side en server-side. Session management na registratie.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 1.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-002: Gebruiker Login</span>
+                        <span>
+                            <span class="story-points">3</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona guest">GAST</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>geregistreerde gebruiker</strong> wil ik <strong>kunnen inloggen</strong> zodat ik <strong>toegang krijg tot mijn persoonlijke content</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan inloggen met email en wachtwoord</li>
+                                <li>Bij onjuiste gegevens krijg ik een duidelijke foutmelding</li>
+                                <li>Na succesvol inloggen word ik doorgestuurd naar mijn dashboard</li>
+                                <li>Mijn sessie blijft actief totdat ik uitlog</li>
+                                <li>Het systeem toont verschillende navigatie op basis van mijn rol</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 1.3 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-003: Wachtwoord Reset</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>student wachtwoorden kunnen resetten</strong> zodat ik <strong>studenten kan helpen die hun wachtwoord vergeten zijn</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan in Teacher Admin een student selecteren</li>
+                                <li>Ik kan een nieuw wachtwoord instellen</li>
+                                <li>Het nieuwe wachtwoord wordt veilig gehashed</li>
+                                <li>Ik krijg bevestiging dat het wachtwoord is gewijzigd</li>
+                                <li>De student kan daarna inloggen met het nieuwe wachtwoord</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 1.4 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-004: Sessie Beveiliging</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>systeembeheerder</strong> wil ik <strong>dat sessies veilig beheerd worden</strong> zodat <strong>ongeautoriseerde toegang voorkomen wordt</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Sessies verlopen na inactiviteit</li>
+                                <li>Gebruikers kunnen veilig uitloggen</li>
+                                <li>Sessie hijacking wordt voorkomen</li>
+                                <li>Rol-gebaseerde toegangscontrole wordt afgedwongen</li>
+                                <li>Ongeautoriseerde routes leiden tot redirect</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Epic 2: Student Experience -->
+        <div class="story-section" id="student-experience">
+            <div class="story-header">Epic 2: 👨‍🎓 Student Leerervaring</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als student wil ik eenvoudig toegang hebben tot mijn klassen, lessen en opdrachten zodat ik effectief kan leren en mijn voortgang kan volgen.</p>
+                </div>
+
+                <!-- Story 2.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-005: Student Dashboard</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona student">STUDENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>student</strong> wil ik <strong>een overzichtelijk dashboard zien</strong> zodat ik <strong>snel toegang heb tot mijn klassen, lessen en opdrachten</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie een welkomstbericht met mijn naam</li>
+                                <li>Ik zie alle klassen waarin ik ben ingeschreven</li>
+                                <li>Ik zie mijn recente lessen chronologisch</li>
+                                <li>Ik zie mijn opdrachten met deadlines</li>
+                                <li>Ik kan klikken op items voor meer details</li>
+                                <li>Het dashboard is responsive op mobiele apparaten</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-006: Klas Details Bekijken</span>
+                        <span>
+                            <span class="story-points">3</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona student">STUDENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>student</strong> wil ik <strong>details van een klas kunnen bekijken</strong> zodat ik <strong>informatie over de docent, medestudenten en klasinhoud kan zien</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie de klasnaam en beschrijving</li>
+                                <li>Ik zie informatie over de docent</li>
+                                <li>Ik zie een lijst van mijn klasgenoten</li>
+                                <li>Ik zie alle lessen voor deze klas</li>
+                                <li>Ik kan terug naar het dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2.3 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-007: Les Content Bekijken</span>
+                        <span>
+                            <span class="story-points">4</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona student">STUDENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>student</strong> wil ik <strong>les content kunnen bekijken</strong> zodat ik <strong>kan leren van het materiaal dat de docent heeft gedeeld</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie de les titel en beschrijving</li>
+                                <li>Ik zie wanneer de les is aangemaakt</li>
+                                <li>Ik zie de naam van de docent</li>
+                                <li>Content wordt duidelijk en gestructureerd weergegeven</li>
+                                <li>Ik kan navigeren tussen verschillende lessen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2.4 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-008: Opdracht Details</span>
+                        <span>
+                            <span class="story-points">3</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona student">STUDENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>student</strong> wil ik <strong>opdracht details kunnen bekijken</strong> zodat ik <strong>weet wat er van mij verwacht wordt en wanneer de deadline is</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie duidelijke opdracht instructies</li>
+                                <li>Ik zie de deadline prominent weergegeven</li>
+                                <li>Ik zie aan welke les de opdracht gerelateerd is</li>
+                                <li>Ik kan terug naar mijn dashboard of klas</li>
+                                <li>Deadlines worden visueel gemarkeerd (urgent/normaal)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2.5 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-009: Nieuws Toegang</span>
+                        <span>
+                            <span class="story-points">2</span>
+                            <span class="priority low">LAAG</span>
+                            <span class="persona student">STUDENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>student</strong> wil ik <strong>toegang hebben tot platform nieuws</strong> zodat ik <strong>op de hoogte blijf van belangrijke updates en aankondigingen</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan via de navigatie naar de nieuwspagina</li>
+                                <li>Nieuwsartikelen worden chronologisch getoond</li>
+                                <li>Ik kan terug naar mijn dashboard</li>
+                                <li>Nieuws is toegankelijk voor alle ingelogde gebruikers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Epic 3: Teacher Management -->
+        <div class="story-section" id="teacher-management">
+            <div class="story-header">Epic 3: 👩‍🏫 Docent Klasbeheer</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als docent wil ik mijn klassen en studenten effectief kunnen beheren zodat ik gestructureerd onderwijs kan geven en studenten kan ondersteunen.</p>
+                </div>
+
+                <!-- Story 3.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-010: Klas Aanmaken</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>nieuwe klassen kunnen aanmaken</strong> zodat ik <strong>mijn onderwijscontent kan organiseren</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan een klasnaam en beschrijving invoeren</li>
+                                <li>Het systeem valideert dat de klasnaam niet leeg is</li>
+                                <li>De klas wordt gekoppeld aan mijn docent account</li>
+                                <li>Na aanmaken word ik doorgestuurd naar het klassenoverzicht</li>
+                                <li>Ik zie de nieuwe klas in mijn overzicht</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-011: Klassen Overzicht</span>
+                        <span>
+                            <span class="story-points">3</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>een overzicht van al mijn klassen zien</strong> zodat ik <strong>snel kan navigeren naar de klas die ik wil beheren</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie alle klassen die ik heb aangemaakt</li>
+                                <li>Per klas zie ik naam, beschrijving en aantal studenten</li>
+                                <li>Ik kan klikken op "Details bekijken" voor klasbeheer</li>
+                                <li>Ik kan klassen verwijderen met bevestiging</li>
+                                <li>Ik kan een nieuwe klas aanmaken</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3.3 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-012: Student Inschrijving</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>studenten kunnen inschrijven en uitschrijven voor mijn klassen</strong> zodat ik <strong>de klassamenstelling kan beheren</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie een dropdown met beschikbare studenten</li>
+                                <li>Ik kan een student selecteren en toevoegen aan de klas</li>
+                                <li>Ik zie een tabel met alle ingeschreven studenten</li>
+                                <li>Ik kan studenten uitschrijven met een klik</li>
+                                <li>Het aantal studenten wordt realtime bijgewerkt</li>
+                                <li>Alleen mijn eigen klassen zijn bewerkbaar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3.4 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-013: Klas Verwijderen</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>klassen kunnen verwijderen</strong> zodat ik <strong>oude of onjuiste klassen kan opruimen</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan alleen mijn eigen klassen verwijderen</li>
+                                <li>Het systeem vraagt om bevestiging voor verwijdering</li>
+                                <li>Alle gerelateerde inschrijvingen worden ook verwijderd</li>
+                                <li>Na verwijdering word ik terug geleid naar het overzicht</li>
+                                <li>Er verschijnt een bevestiging van succesvolle verwijdering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3.5 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-014: Teacher Admin Panel</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>toegang hebben tot student administratie functies</strong> zodat ik <strong>studenten kan aanmaken en beheren</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan nieuwe student accounts aanmaken</li>
+                                <li>Ik kan student wachtwoorden resetten</li>
+                                <li>Ik kan studenten snel inschrijven voor klassen</li>
+                                <li>Ik zie een overzicht van alle studenten</li>
+                                <li>Alleen docenten hebben toegang tot deze functies</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Epic 4: Content Management -->
+        <div class="story-section" id="content-management">
+            <div class="story-header">Epic 4: 📚 Content & Materiaal Beheer</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als content creator wil ik lessen, opdrachten en nieuwsartikelen kunnen beheren zodat ik relevant en actueel onderwijsmateriaal kan aanbieden.</p>
+                </div>
+
+                <!-- Story 4.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-015: Les Aanmaken</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>lessen kunnen aanmaken voor mijn klassen</strong> zodat ik <strong>gestructureerd onderwijsmateriaal kan aanbieden</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan een les titel en beschrijving invoeren</li>
+                                <li>Ik kan de les koppelen aan een van mijn klassen</li>
+                                <li>De les wordt automatisch gedateerd</li>
+                                <li>Studenten van de klas kunnen de les bekijken</li>
+                                <li>Lessen verschijnen in chronologische volgorde</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 4.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-016: Opdracht Creatie</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>opdrachten kunnen aanmaken met deadlines</strong> zodat ik <strong>studenten concrete taken kan geven</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan opdracht instructies en beschrijving invoeren</li>
+                                <li>Ik kan een deadline instellen</li>
+                                <li>Ik kan de opdracht koppelen aan een les</li>
+                                <li>Studenten zien de opdracht in hun dashboard</li>
+                                <li>Deadlines worden duidelijk gecommuniceerd</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 4.3 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-017: Nieuws Beheer</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority low">LAAG</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>nieuwsartikelen kunnen beheren</strong> zodat ik <strong>gebruikers kan informeren over platform updates</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan nieuwsartikelen aanmaken, bewerken en verwijderen</li>
+                                <li>Artikelen hebben titel, inhoud en publicatiedatum</li>
+                                <li>Alle gebruikers kunnen gepubliceerd nieuws lezen</li>
+                                <li>Nieuwsartikelen worden chronologisch weergegeven</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Epic 5: Administration -->
+        <div class="story-section" id="administration">
+            <div class="story-header">Epic 5: ⚙️ Systeem Administratie</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als systeembeheerder wil ik volledige controle hebben over gebruikers, rollen en systeeminstellingen zodat ik het platform effectief kan beheren en onderhouden.</p>
+                </div>
+
+                <!-- Story 5.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-018: Gebruikers Overzicht</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority high">HOOG</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>alle gebruikers kunnen bekijken en beheren</strong> zodat ik <strong>overzicht heb over de platform gebruikers</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie alle gebruikers in een overzichtelijke tabel</li>
+                                <li>Per gebruiker zie ik naam, email, rol en registratiedatum</li>
+                                <li>Ik kan gebruikers zoeken en filteren op rol</li>
+                                <li>Ik kan acties uitvoeren per gebruiker</li>
+                                <li>Alleen admins hebben toegang tot deze functie</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 5.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-019: Gebruiker Promoveren</span>
+                        <span>
+                            <span class="story-points">3</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>gebruikers kunnen promoveren tot admin</strong> zodat ik <strong>andere beheerders kan aanstellen</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan bij elke non-admin gebruiker klikken op "Promoveer"</li>
+                                <li>Het systeem vraagt om bevestiging</li>
+                                <li>De gebruiker rol wordt bijgewerkt naar admin</li>
+                                <li>Ik krijg feedback over de succesvolle promotie</li>
+                                <li>De gebruiker heeft bij volgende login admin rechten</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 5.3 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-020: Gebruiker Verwijderen</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>gebruikers kunnen verwijderen</strong> zodat ik <strong>inactive of problematische accounts kan opruimen</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik kan gebruikers verwijderen behalve mezelf</li>
+                                <li>Het systeem vraagt om dubbele bevestiging</li>
+                                <li>Alle gerelateerde data wordt ook verwijderd</li>
+                                <li>Ik kan niet mezelf verwijderen voor veiligheid</li>
+                                <li>Er verschijnt een bevestiging van verwijdering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 5.4 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-021: Admin Dashboard</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority medium">MEDIUM</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>een overzichtelijk admin dashboard</strong> zodat ik <strong>snel systeemstatistieken kan zien en beheeracties kan uitvoeren</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie statistieken van totaal aantal gebruikers per rol</li>
+                                <li>Ik zie snelle toegang tot gebruikersbeheer</li>
+                                <li>Ik kan navigeren naar verschillende admin functies</li>
+                                <li>Het dashboard is alleen toegankelijk voor admins</li>
+                                <li>Statistieken worden realtime bijgewerkt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Epic 6: Reporting -->
+        <div class="story-section" id="reporting">
+            <div class="story-header">Epic 6: 📊 Rapportage & Analytics</div>
+            <div class="story-content">
+                <div class="epic">
+                    <h4>Epic Beschrijving:</h4>
+                    <p>Als gebruiker wil ik inzicht hebben in platform gebruik, voortgang en prestaties zodat ik data-gedreven beslissingen kan nemen over het onderwijs proces.</p>
+                </div>
+
+                <!-- Story 6.1 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-022: Platform Statistieken</span>
+                        <span>
+                            <span class="story-points">5</span>
+                            <span class="priority low">LAAG</span>
+                            <span class="persona admin">ADMIN</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>administrator</strong> wil ik <strong>platform statistieken kunnen bekijken</strong> zodat ik <strong>inzicht heb in het gebruik van EduLearn</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie totaal aantal gebruikers per rol</li>
+                                <li>Ik zie aantal actieve klassen en lessen</li>
+                                <li>Ik zie registratie trends over tijd</li>
+                                <li>Data wordt visueel aantrekkelijk gepresenteerd</li>
+                                <li>Statistieken zijn realtime en accuraat</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 6.2 -->
+                <div class="user-story">
+                    <div class="story-title">
+                        <span>US-023: Klas Rapportage</span>
+                        <span>
+                            <span class="story-points">8</span>
+                            <span class="priority low">LAAG</span>
+                            <span class="persona teacher">DOCENT</span>
+                        </span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-text">
+                            Als een <strong>docent</strong> wil ik <strong>rapportages over mijn klassen kunnen genereren</strong> zodat ik <strong>inzicht heb in student engagement en voortgang</strong>.
+                        </div>
+                        
+                        <div class="acceptance-criteria">
+                            <h4>✅ Acceptatiecriteria:</h4>
+                            <ul>
+                                <li>Ik zie per klas het aantal ingeschreven studenten</li>
+                                <li>Ik zie activiteit statistieken per klas</li>
+                                <li>Ik kan rapporten exporteren naar PDF/Excel</li>
+                                <li>Rapportages zijn alleen van mijn eigen klassen</li>
+                                <li>Data is actueel en correct</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="overview">
+            <h2>📊 User Stories Samenvatting</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">13</div>
+                    <div>Hoge Prioriteit</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div>Medium Prioriteit</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div>Lage Prioriteit</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div>Sprints Geschat</div>
+                </div>
+            </div>
+            
+            <h3>🎯 Sprint Planning Suggestie:</h3>
+            <div class="epic">
+                <h4>Sprint 1 (Hoge Prioriteit - 28 Story Points):</h4>
+                <p>Authenticatie, Student Dashboard, Basis Klasbeheer, Gebruikersbeheer</p>
+                
+                <h4>Sprint 2 (Medium Prioriteit - 35 Story Points):</h4>
+                <p>Content Management, Teacher Admin, Geavanceerd Klasbeheer</p>
+                
+                <h4>Sprint 3 (Lage Prioriteit - 26 Story Points):</h4>
+                <p>Rapportages, Analytics, Nieuws Beheer, Extra Features</p>
+            </div>
+            
+            <h3>🎨 Story Points Verdeling:</h3>
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 15px 0;">
+                <p><strong>Totaal Effort:</strong> 89 Story Points</p>
+                <p><strong>Gemiddeld per Epic:</strong> ~15 Story Points</p>
+                <p><strong>Complexiteit Range:</strong> 2-8 Story Points per verhaal</p>
+                <p><strong>Geschatte Doorlooptijd:</strong> 3 Sprints (6-9 weken)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

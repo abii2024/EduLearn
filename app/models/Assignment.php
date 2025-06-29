@@ -1,8 +1,9 @@
 <?php
 // app/models/Assignment.php
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/interfaces/ORMinterface.php';
 
-class Assignment extends BaseModel
+class Assignment extends BaseModel implements ORMinterface
 {
     protected static $table = 'assignments';
     
@@ -54,6 +55,22 @@ class Assignment extends BaseModel
             LIMIT 5
         ");
         $stmt->execute([$teacherId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // ORM interface methods
+    public static function findByID($id)
+    {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM assignments WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function findAll()
+    {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM assignments");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
