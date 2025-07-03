@@ -88,6 +88,21 @@ class NewsModel extends BaseModel implements ORMinterface
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function delete()
+    {
+        global $pdo;
+        if (isset($this->id)) {
+            $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
+            return $stmt->execute([$this->id]);
+        }
+        return false;
+    }
+
+    public function getID()
+    {
+        return $this->id ?? null;
+    }
+
     public static function initializeDatabase()
     {
         global $pdo;

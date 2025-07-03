@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERD - EduLearn Database Schema (3e Normaalvorm)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .erd-container {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .table-entity {
+            display: inline-block;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            margin: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            vertical-align: top;
+        }
+        
+        .table-header {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        .table-fields {
+            padding: 0;
+        }
+        
+        .field {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .field:last-child {
+            border-bottom: none;
+        }
+        
+        .field-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .field-type {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .primary-key {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .foreign-key {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .unique-key {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .relationship {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .relationship h4 {
+            color: #0066cc;
+            margin: 0 0 10px 0;
+        }
+        
+        .normalization-box {
+            background: #f0f8ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .normalization-box h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .badge-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .legend {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .legend h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .mermaid-container {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .erd-container {
+                padding: 10px;
+            }
+            
+            .table-entity {
+                margin: 10px 5px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 ERD - EduLearn Database Schema</h1>
+        <p>Entity-Relationship Diagram in 3e Normaalvorm</p>
+        <div class="badges">
+            <span class="badge badge-primary">3e Normaalvorm</span>
+            <span class="badge badge-success">Volledig Genormaliseerd</span>
+            <span class="badge badge-info">8 Entiteiten</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>🗂️ Database Schema Overzicht</h2>
+            <p>
+                Het EduLearn database schema is ontworpen volgens de <strong>3e Normaalvorm (3NF)</strong> 
+                om data redundantie te minimaliseren en data integriteit te waarborgen. 
+                Het schema ondersteunt een volledig leerbeheersysteem met gebruikersbeheer, 
+                klasbeheer, lessen, opdrachten en nieuwsfuncties.
+            </p>
+            
+            <div class="normalization-box">
+                <h4>🎯 3e Normaalvorm Kenmerken</h4>
+                <ul>
+                    <li><strong>1NF:</strong> Alle velden bevatten atomaire waarden</li>
+                    <li><strong>2NF:</strong> Geen partiële functionele afhankelijkheden</li>
+                    <li><strong>3NF:</strong> Geen transitieve afhankelijkheden</li>
+                    <li><strong>Referentiële integriteit:</strong> Foreign keys met CASCADE constraints</li>
+                    <li><strong>Normalisatie:</strong> Minimale data redundantie</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🏗️ Entiteiten Schema</h2>
+            
+            <div class="erd-container">
+                <div class="table-entity">
+                    <div class="table-header">👥 USERS</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">name</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field unique-key">
+                            <span class="field-name">email</span>
+                            <span class="field-type">VARCHAR(255) UNIQUE</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">password</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">role</span>
+                            <span class="field-type">ENUM('student','teacher','admin')</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">created_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">🎓 CLASSES</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">name</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">description</span>
+                            <span class="field-type">TEXT</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">teacher_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">created_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">📚 LESSONS</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">teacher_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">class_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">title</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">description</span>
+                            <span class="field-type">TEXT</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">created_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">📝 ASSIGNMENTS</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">lesson_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">title</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">instructions</span>
+                            <span class="field-type">TEXT</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">deadline</span>
+                            <span class="field-type">DATETIME</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">🔗 CLASS_ENROLLMENTS</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">class_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">student_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">enrolled_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">📰 NEWS</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">title</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">content</span>
+                            <span class="field-type">TEXT</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">created_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-entity">
+                    <div class="table-header">💰 SALES</div>
+                    <div class="table-fields">
+                        <div class="field primary-key">
+                            <span class="field-name">id</span>
+                            <span class="field-type">INT PK AI</span>
+                        </div>
+                        <div class="field foreign-key">
+                            <span class="field-name">student_id</span>
+                            <span class="field-type">INT FK</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">product_name</span>
+                            <span class="field-type">VARCHAR(255)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">amount</span>
+                            <span class="field-type">DECIMAL(10,2)</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">sale_date</span>
+                            <span class="field-type">DATE</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-name">created_at</span>
+                            <span class="field-type">TIMESTAMP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Relaties Diagram</h2>
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    erDiagram
+                        USERS {
+                            int id PK
+                            varchar name
+                            varchar email UK
+                            varchar password
+                            enum role
+                            timestamp created_at
+                        }
+                        
+                        CLASSES {
+                            int id PK
+                            varchar name
+                            text description
+                            int teacher_id FK
+                            timestamp created_at
+                        }
+                        
+                        LESSONS {
+                            int id PK
+                            int teacher_id FK
+                            int class_id FK
+                            varchar title
+                            text description
+                            timestamp created_at
+                        }
+                        
+                        ASSIGNMENTS {
+                            int id PK
+                            int lesson_id FK
+                            varchar title
+                            text instructions
+                            datetime deadline
+                        }
+                        
+                        CLASS_ENROLLMENTS {
+                            int id PK
+                            int class_id FK
+                            int student_id FK
+                            timestamp enrolled_at
+                        }
+                        
+                        NEWS {
+                            int id PK
+                            varchar title
+                            text content
+                            timestamp created_at
+                        }
+                        
+                        SALES {
+                            int id PK
+                            int student_id FK
+                            varchar product_name
+                            decimal amount
+                            date sale_date
+                            timestamp created_at
+                        }
+                        
+                        USERS ||--o{ CLASSES : "teacher creates"
+                        USERS ||--o{ LESSONS : "teacher creates"
+                        USERS ||--o{ SALES : "student purchases"
+                        CLASSES ||--o{ LESSONS : "contains"
+                        CLASSES ||--o{ CLASS_ENROLLMENTS : "has"
+                        USERS ||--o{ CLASS_ENROLLMENTS : "student enrolls"
+                        LESSONS ||--o{ ASSIGNMENTS : "contains"
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Relaties Specificatie</h2>
+            
+            <div class="relationship">
+                <h4>👥 USERS → 🎓 CLASSES</h4>
+                <p><strong>Relatie:</strong> Een-naar-veel (1:N)</p>
+                <p><strong>Betekenis:</strong> Eén teacher kan meerdere classes aanmaken</p>
+                <p><strong>Foreign Key:</strong> classes.teacher_id → users.id</p>
+                <p><strong>Constraint:</strong> CASCADE ON DELETE</p>
+            </div>
+
+            <div class="relationship">
+                <h4>👥 USERS → 📚 LESSONS</h4>
+                <p><strong>Relatie:</strong> Een-naar-veel (1:N)</p>
+                <p><strong>Betekenis:</strong> Eén teacher kan meerdere lessons aanmaken</p>
+                <p><strong>Foreign Key:</strong> lessons.teacher_id → users.id</p>
+                <p><strong>Constraint:</strong> CASCADE ON DELETE</p>
+            </div>
+
+            <div class="relationship">
+                <h4>🎓 CLASSES → 📚 LESSONS</h4>
+                <p><strong>Relatie:</strong> Een-naar-veel (1:N)</p>
+                <p><strong>Betekenis:</strong> Eén class kan meerdere lessons bevatten</p>
+                <p><strong>Foreign Key:</strong> lessons.class_id → classes.id</p>
+                <p><strong>Constraint:</strong> CASCADE ON DELETE</p>
+            </div>
+
+            <div class="relationship">
+                <h4>📚 LESSONS → 📝 ASSIGNMENTS</h4>
+                <p><strong>Relatie:</strong> Een-naar-veel (1:N)</p>
+                <p><strong>Betekenis:</strong> Eén lesson kan meerdere assignments bevatten</p>
+                <p><strong>Foreign Key:</strong> assignments.lesson_id → lessons.id</p>
+                <p><strong>Constraint:</strong> CASCADE ON DELETE</p>
+            </div>
+
+            <div class="relationship">
+                <h4>👥 USERS ↔ 🎓 CLASSES (via CLASS_ENROLLMENTS)</h4>
+                <p><strong>Relatie:</strong> Veel-naar-veel (N:M)</p>
+                <p><strong>Betekenis:</strong> Studenten kunnen zich inschrijven voor meerdere classes</p>
+                <p><strong>Junction Table:</strong> class_enrollments</p>
+                <p><strong>Foreign Keys:</strong> 
+                    <br>• class_enrollments.student_id → users.id
+                    <br>• class_enrollments.class_id → classes.id
+                </p>
+                <p><strong>Constraint:</strong> UNIQUE(class_id, student_id)</p>
+            </div>
+
+            <div class="relationship">
+                <h4>👥 USERS → 💰 SALES</h4>
+                <p><strong>Relatie:</strong> Een-naar-veel (1:N)</p>
+                <p><strong>Betekenis:</strong> Eén student kan meerdere aankopen doen</p>
+                <p><strong>Foreign Key:</strong> sales.student_id → users.id</p>
+                <p><strong>Constraint:</strong> CASCADE ON DELETE</p>
+            </div>
+
+            <div class="relationship">
+                <h4>📰 NEWS</h4>
+                <p><strong>Relatie:</strong> Standalone entiteit</p>
+                <p><strong>Betekenis:</strong> Nieuwsberichten zijn onafhankelijk van andere entiteiten</p>
+                <p><strong>Foreign Key:</strong> Geen</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Normalisatie Analyse</h2>
+            
+            <div class="normalization-box">
+                <h4>1️⃣ Eerste Normaalvorm (1NF)</h4>
+                <ul>
+                    <li>✅ Alle velden bevatten atomaire waarden</li>
+                    <li>✅ Geen herhalende groepen</li>
+                    <li>✅ Elke rij is uniek identificeerbaar via primary key</li>
+                </ul>
+            </div>
+
+            <div class="normalization-box">
+                <h4>2️⃣ Tweede Normaalvorm (2NF)</h4>
+                <ul>
+                    <li>✅ Voldoet aan 1NF</li>
+                    <li>✅ Geen partiële functionele afhankelijkheden</li>
+                    <li>✅ Alle non-key attributen zijn volledig afhankelijk van primary key</li>
+                    <li>✅ Junction table CLASS_ENROLLMENTS voorkomt M:N redundantie</li>
+                </ul>
+            </div>
+
+            <div class="normalization-box">
+                <h4>3️⃣ Derde Normaalvorm (3NF)</h4>
+                <ul>
+                    <li>✅ Voldoet aan 2NF</li>
+                    <li>✅ Geen transitieve afhankelijkheden</li>
+                    <li>✅ Alle non-key attributen zijn direct afhankelijk van primary key</li>
+                    <li>✅ Referentiële integriteit via foreign key constraints</li>
+                </ul>
+            </div>
+
+            <div class="normalization-box">
+                <h4>🎯 Voordelen van 3NF Design</h4>
+                <ul>
+                    <li><strong>Minimale Redundantie:</strong> Gegevens worden maar één keer opgeslagen</li>
+                    <li><strong>Data Integriteit:</strong> Foreign key constraints voorkomen orphaned records</li>
+                    <li><strong>Flexibiliteit:</strong> Eenvoudig uitbreiden met nieuwe entiteiten</li>
+                    <li><strong>Onderhoudbaarheid:</strong> Updates hoeven maar op één plek te gebeuren</li>
+                    <li><strong>Consistentie:</strong> Geen tegenstrijdige informatie mogelijk</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔧 Technische Specificaties</h2>
+            
+            <h3>Database Engine</h3>
+            <ul>
+                <li><strong>DBMS:</strong> MySQL 8.0+</li>
+                <li><strong>Engine:</strong> InnoDB</li>
+                <li><strong>Charset:</strong> utf8mb4</li>
+                <li><strong>Collation:</strong> utf8mb4_unicode_ci</li>
+            </ul>
+
+            <h3>Indexering</h3>
+            <ul>
+                <li><strong>Primary Keys:</strong> AUTO_INCREMENT op alle tabellen</li>
+                <li><strong>Unique Keys:</strong> users.email</li>
+                <li><strong>Foreign Key Indexes:</strong> Automatisch gecreëerd</li>
+                <li><strong>Composite Unique:</strong> class_enrollments(class_id, student_id)</li>
+            </ul>
+
+            <h3>Constraints</h3>
+            <ul>
+                <li><strong>NOT NULL:</strong> Alle verplichte velden</li>
+                <li><strong>UNIQUE:</strong> Email addresses</li>
+                <li><strong>FOREIGN KEY:</strong> Met CASCADE DELETE</li>
+                <li><strong>ENUM:</strong> User roles (student, teacher, admin)</li>
+                <li><strong>CHECK:</strong> Positive amounts in sales</li>
+            </ul>
+
+            <h3>Data Types</h3>
+            <ul>
+                <li><strong>INT:</strong> Primary keys en foreign keys</li>
+                <li><strong>VARCHAR(255):</strong> Namen, email, titles</li>
+                <li><strong>TEXT:</strong> Lange beschrijvingen en content</li>
+                <li><strong>DECIMAL(10,2):</strong> Monetaire bedragen</li>
+                <li><strong>DATETIME:</strong> Deadlines</li>
+                <li><strong>DATE:</strong> Sale dates</li>
+                <li><strong>TIMESTAMP:</strong> Created timestamps</li>
+            </ul>
+        </div>
+
+        <div class="legend">
+            <h4>🎨 Legende</h4>
+            <div class="legend-item">
+                <div class="legend-color primary-key"></div>
+                <span>Primary Key (PK) - Unieke identificatie</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color foreign-key"></div>
+                <span>Foreign Key (FK) - Referentie naar andere tabel</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color unique-key"></div>
+                <span>Unique Key (UK) - Unieke waarde</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f8f9fa; border: 1px solid #dee2e6;"></div>
+                <span>Regulier veld - Standaard data opslag</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>📋 Samenvatting</h2>
+            <p>
+                Het EduLearn database schema is volledig genormaliseerd volgens de 3e normaalvorm 
+                en biedt een solide foundation voor een leerbeheersysteem. De database ondersteunt:
+            </p>
+            <ul>
+                <li>✅ <strong>Gebruikersbeheer</strong> met rol-gebaseerde toegang</li>
+                <li>✅ <strong>Klasbeheer</strong> met teacher-student relaties</li>
+                <li>✅ <strong>Lesbeheer</strong> gekoppeld aan klassen</li>
+                <li>✅ <strong>Opdrachtbeheer</strong> met deadlines</li>
+                <li>✅ <strong>Inschrijvingssysteem</strong> voor student-klas relaties</li>
+                <li>✅ <strong>Verkooptracking</strong> voor commerciële functies</li>
+                <li>✅ <strong>Nieuwsbeheer</strong> voor communicatie</li>
+            </ul>
+            
+            <p>
+                Het schema is ontworpen voor schaalbaarheid, data integriteit en optimale prestaties 
+                binnen een moderne PHP MVC architectuur.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#5a67d8',
+                lineColor: '#a0aec0',
+                sectionBkgColor: '#f7fafc',
+                altSectionBkgColor: '#edf2f7',
+                gridColor: '#e2e8f0',
+                secondaryColor: '#764ba2',
+                tertiaryColor: '#f7fafc'
+            }
+        });
+    </script>
+</body>
+</html>

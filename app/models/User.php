@@ -64,6 +64,21 @@ class User extends BaseModel implements ORMinterface
         $stmt = $pdo->query("SELECT * FROM users");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function delete()
+    {
+        global $pdo;
+        if (isset($this->id)) {
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            return $stmt->execute([$this->id]);
+        }
+        return false;
+    }
+
+    public function getID()
+    {
+        return $this->id ?? null;
+    }
     
     public static function initializeDatabase()
     {

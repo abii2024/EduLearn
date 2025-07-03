@@ -128,4 +128,19 @@ class SalesModel extends BaseModel implements ORMinterface
         $stmt = $pdo->query("SELECT * FROM sales");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function delete()
+    {
+        global $pdo;
+        if (isset($this->id)) {
+            $stmt = $pdo->prepare("DELETE FROM sales WHERE id = ?");
+            return $stmt->execute([$this->id]);
+        }
+        return false;
+    }
+
+    public function getID()
+    {
+        return $this->id ?? null;
+    }
 }
