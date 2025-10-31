@@ -1,0 +1,40 @@
+# OS Files
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# PHP
+vendor/
+composer.lock
+*.log
+*.cache
+
+# Database
+*.sql.backup
+db_backup/
+
+# Config (local overrides)
+config/database.local.php
+.env
+.env.local
+
+# Uploads & Cache
+uploads/
+cache/
+tmp/
+temp/
+
+# Documentation builds
+docs/_build/
